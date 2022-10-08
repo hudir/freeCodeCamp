@@ -48,3 +48,49 @@ Like I said, you often don't want to make commits directly to the main branch of
 "table": {
   "create": "CREATE TABLE table_name;"
 }
+
+
+
+Now you have four commits, they are getting a little hard to see. Check the log again, but this time use the --oneline flag to condense the output so it's more readable.
+
+
+You created the feat/add-create-table-reference branch, made a commit, and now it's ready to be added to the main branch. You can use git merge branch_name to bring changes from a branch into the branch you are currently on. Merge the changes from your feature branch into the main branch.
+
+
+The feat: add create table reference commit you made on your feature branch was added to this branch with the merge. You can delete a branch with git branch -d branch_name. -d stands for "delete". Since your changes were added, you can safely delete your feature branch. Do that now.
+
+
+You're just left with the main branch... Want to try it again? Last time you created a branch and then switched to it. You can do both at the same time with git checkout -b branch_name. Create and switch to a new branch named feat/add-drop-table-reference.
+
+
+
+You're getting the hang of it 😄 The process is to create a branch, make the changes you want, commit them, and then merge the changes into branch you started on. Pretty simple, lets keep going. Create and checkout a new branch named feat/add-column-references
+
+
+The commit was added. I see an error in the syntax of one of the commands. You want to fix it, but this branch is not for fixing it. Switch back to your main branch so you can create a new branch to fix it.
+
+
+Remember that, when you create a branch, it will be a clone of whatever branch you are on when you create it. That's why you switched to main first. Create and switch to a branch named fix/create-table-syntax.
+
+
+
+You created this branch and made a commit. Since then, a commit for a bug fix was added to main. This is common with many people working on a codebase simultaneously. You need to update this branch so it has the same commits from main, but you can't just merge that branch into this one. You need that bug fix commit to be in the same order here as it is on main, right after the "drop table" commit. You need to rebase this branch against main to do that. Enter git rebase main to rebase this branch.
+
+The logs show that the bug fix commit from main was added, and then the commit from this branch was added on top of it. Now, when this branch is ready to be merged into main, it will have the same commit history. You should try to keep your branches up to date like this by rebasing them often. In your JSON file, add a drop key to the column object with a reference for dropping a column. The syntax is in the hints, give it a try first.
+
+Another commit was added to main, you should update this branch again. To be more specific, a rebase will "rewind" this branch to where it last matched main, then, add the commits from main that aren't here. After that, it adds the commits you made to this branch on top. rebase this branch against main so it's up to date. You should see a conflict...
+
+
+The confict arose because the first commit you added to this branch changed the same lines as the commit from main. So it tried to add the commit, but couldn't because something was already there. There are sections, separated by characters (<, >, and =), that represent the commit you are on (HEAD) and the commit that is trying to be added (feat: add column reference). Fix the conflict by removing those <, >, and = characters. Then making the JSON object valid again.
+
+
+It says that you are still in the middle of rebasing and there's one file that needs to be merged yet. Add the file to staging like you would any other commit.
+
+
+You fixed the conflicts that arose from trying to add this commit and added them to staging. It says all conflicts fixed: run "git rebase --continue". Run the suggested command to continue the rebase.
+
+
+The last commit was added after you continued the rebase without conflict. The rebase is now finished. View your log with the oneline flag.
+
+
+You can see the "insert row" commit from main was added to this branch before the two commits you made here. Now this branch is up to date and you can continue working on it. Add a rename key to the column object. The value should look like this: "ALTER TABLE table_name RENAME COLUMN column_name TO new_name;"
