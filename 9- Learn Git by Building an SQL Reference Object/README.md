@@ -114,3 +114,33 @@ You can see one item there. Bring the changes back with git stash pop.
 
 
 The changes from the stash reappeared in the file and git showed the status for you. You are right where you left of before stashing the changes. Popping a stash like that will remove the most recent stash and apply it to your working tree. View the list of your stashes again.
+
+
+
+The changes are stashed again. View a condensed version of the changes in the latest stash with git stash show.
+
+
+
+You can see what file was changed and how many lines were added and removed from the file. View the full changes of the latest stash with git stash show -p. -p stands for "patch".
+
+Now you can see the actual changes that are stored in the stash. Before, you used the pop command to removed the latest stash and add it to your working tree. You can add the latest stash while keeping it in the list with git stash apply. Apply your stash with this method.
+
+The code from the stash was added to your working tree, and the stash is still there in case you want to add it somewhere else. Stash the changes again.
+
+
+Now there's two things stashed. You can use the name at the front of each stash (stash@{#}) with many of the stash commands to select one other than the latest one. The most recent stash is the one at the top, stash@{0}. View the condensed changes of the oldest stash with the git stash show command by putting the name of the stash after it.
+
+```bash
+$ git stash show -p stash@{1}
+```
+
+
+There's two identical items in your stash. Drop one of them with git stash drop or git stash drop <stash_name>.
+
+
+
+It's still there. Pop the stash so the code gets added to this new branch.
+
+1. Use the "git stash pop" command in your repo
+
+2. Type git stash pop in the terminal and press enter
