@@ -94,3 +94,23 @@ The last commit was added after you continued the rebase without conflict. The r
 
 
 You can see the "insert row" commit from main was added to this branch before the two commits you made here. Now this branch is up to date and you can continue working on it. Add a rename key to the column object. The value should look like this: "ALTER TABLE table_name RENAME COLUMN column_name TO new_name;"
+
+
+
+There's been a mistake. This branch was for the insert command, not the update command. You can put your changes aside with git stash. Stash your changes so you can add them to a different branch.
+```bash
+Saved working directory and index state WIP on add-insert-row-reference: 88989a2 feat: add insert row reference
+```
+
+
+Your working tree is clean and there's no changes git recognizes. The changes you made are stashed. View the things you have stashed with git stash list.
+
+```bash
+stash@{0}: WIP on add-insert-row-reference: 88989a2 feat: add insert row reference
+```
+
+
+You can see one item there. Bring the changes back with git stash pop.
+
+
+The changes from the stash reappeared in the file and git showed the status for you. You are right where you left of before stashing the changes. Popping a stash like that will remove the most recent stash and apply it to your working tree. View the list of your stashes again.
