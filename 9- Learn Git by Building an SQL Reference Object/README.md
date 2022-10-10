@@ -144,3 +144,59 @@ It's still there. Pop the stash so the code gets added to this new branch.
 1. Use the "git stash pop" command in your repo
 
 2. Type git stash pop in the terminal and press enter
+
+
+
+
+# travle back
+
+I'm going to show you a few ways to remove or undo a commit. The first is to simply "travel back in time". You can use the git reset command to travel to any point in your commit history. Your current HEAD is a reference to the last commit you just made. Use git reset HEAD~1 to go back one before HEAD.
+
+This is a "soft" reset and will put the changes from the commit you undid in your working tree. You can see that it says there's unstaged changes after the reset to your file. View your log with the oneline flag.
+
+
+And the changes from the reset are back in the working tree. So when you reset to one commit before HEAD, it removed the most recent commit, and put all the changes in the working tree. If you used the --hard flag with the reset, the changes would have not been added to the working tree. Add the changes back to staging so you can commit them again.
+
+
+And the changes from the reset are back in the working tree. So when you reset to one commit before HEAD, it removed the most recent commit, and put all the changes in the working tree. If you used the --hard flag with the reset, the changes would have not been added to the working tree. Add the changes back to staging so you can commit them again.
+
+
+Reverting is a good way to undo a commit because you don't lose the commit from the history. You can revert the most recent commit (HEAD) with git revert HEAD. Do that now.
+
+
+Git put you into Nano and is asking you enter a commit message for the revert, but they added a default one for you. Don't change anything in Nano, just exit the file to use the default message. You can exit the file by pressing ctrl+x.
+
+
+Using revert to undo that commit added another commit that is the exact opposite of it. Enter git show into the terminal to see the last commit added (now HEAD) and its details.
+
+
+Type git show HEAD~1 to take a look at the details of the original commit that you reverted..
+
+
+If you look at the bottom of those two messages, it shows the diff. The diff of the revert commit is the exact opposite of the one before it. Effectively, undoing the changes. You've used rebase to update this branch, but you can enter an "interactive" mode to manipulate commits. Type git rebase --interactive HEAD~2 into the terminal to enter this mode. The HEAD~2 means you will have a chance to change the last two commits.
+
+
+Both, the commit to add the unique command and the one to revert it, were dropped. Enter another --interactive rebase that goes back to the --root instead of HEAD~2. I am going to show you how to change a commit message. --root means that the rebase will go back to your very first commit.
+
+
+You can see that the latest commit is at the bottom here. Be careful not to change the wrong commits. One of the options is r, reword = use commit, but edit the commit message. Replace pick with an r next to the commit with the message feat: add column reference to reword the message, it's the very first commit you added to this branch. When you are done, save the file and exit Nano. Git will put you in another Nano instance to reword the commit message. Don't change anything in it yet.
+
+
+Git is waiting for you to edit the commit message. Add an s at the end of the commit message so it is feat: add column references. When you are done, save the file and exit Nano.
+
+
+
+The message was reworded, but there's a problem. Look at the commit hash for your Initial commit from the last two times you viewed the log, it's that string left of the log. They aren't the same anymore since you rebased back to the root. Same goes for the rest of the commits. When you rebase interactively it changes all those hashes, so git sees them as different commits. If you were to try and merge this into main, it wouldn't work because they don't share the same history anymore. For this reason, you don't want to do an interactive rebase where you go back passed commits unique to the branch you are on. Fortunately, you can fix this. Enter git rebase main to realign the history of the two branches.
+
+
+Now the hashes are the same as they were before you rebased back to --root, which is what they are on main. Enter another interactive rebase. Go back to the first commit you added to this branch, it's HEAD~5.
+
+
+
+Squashing commits means that you will take a bunch of commits and turn them into one. This is helpful to keep your commit history clean and something you want try to do. Replace pick with an s next to all your commits except the one with the message feat: add column references. When you are done, save and exit the file. You will find yourself in another instance of Nano. Don't change anything in it yet.
+
+
+Now all the "column" commits you made to this branch have been squashed into just the one commit at the top. View the log again, but use -1 instead of --oneline this time to view only the last commit.
+
+
+You can see that your one commit has all the messages that were in Nano, which are all of the commits you made to this branch squashed into one commit. I think you are finally done with this branch. Go to your main branch so it can get merged.
