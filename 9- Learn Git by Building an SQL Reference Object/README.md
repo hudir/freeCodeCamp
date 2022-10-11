@@ -200,3 +200,22 @@ Now all the "column" commits you made to this branch have been squashed into jus
 
 
 You can see that your one commit has all the messages that were in Nano, which are all of the commits you made to this branch squashed into one commit. I think you are finally done with this branch. Go to your main branch so it can get merged.
+
+You viewed the most recent log with a -1 flag. You can view the last x number of commits with any number instead of 1. View the last five commits with the oneline flag.
+
+
+
+
+$ git log --oneline
+3392418 (HEAD -> main) feat: add .gitignore and sample.env
+86daf79 fix: add missing rename references
+193e3a2 feat: add column references
+87db07c feat: add delete row reference
+a72acea feat: add update row reference
+88989a2 feat: add insert row reference
+d3609d2 fix: create table syntax
+0ae0bd4 feat: add drop table reference
+18f0344 feat: add create table reference
+684afe7 feat: add drop database reference
+a5de944 feat: add create database reference
+a029be1 Initial commit
