@@ -6,6 +6,7 @@
     },
     "table": {
       "create": "CREATE TABLE table_name();",
+      "create_with_primary_key": "CREATE TABLE table_name(id SERIAL PRIMARY KEY);",
       "drop": "DROP TABLE table_name;",
       "rename": "ALTER TABLE table_name RENAME TO new_name;"
     },
@@ -19,7 +20,9 @@
       "drop": "ALTER TABLE table_name DROP COLUMN column_name;",
       "rename": "ALTER TABLE table_name RENAME COLUMN column_name TO new_name;",
       "primary_key": "ALTER TABLE table_name ADD PRIMARY KEY(column_name);",
-      "foreign_key": "ALTER TABLE table_name ADD FOREIGN KEY(column_name) REFERENCES table_name(column_name);"
+      "foreign_key": "ALTER TABLE table_name ADD FOREIGN KEY(column_name) REFERENCES table_name(column_name);",
+      "constraints": "ALTER TABLE table_name ADD CONSTRAINT constraint_name UNIQUE (column_name1, column_name2, ...)",
+      "not_null": "ALTER TABLE products ALTER COLUMN product_no SET NOT NULL;"
     }
   }
   

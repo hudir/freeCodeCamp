@@ -1,1 +1,0 @@
-CREATE TABLE types(type_id SERIAL PRIMARY KEY);
