@@ -1,3 +1,6 @@
+
+The rest of the commit messages should start with fix:, feat:, refactor:, chore:, or test:
+
  type_id |   type    
 ---------+-----------
        1 | nonmetal
