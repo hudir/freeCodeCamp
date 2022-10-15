@@ -24,7 +24,8 @@
       "add_with_references": "ALTER TABLE table_name ADD COLUMN column_name TYPE REFERENCES other_table_name(column_name);",
       "constraints": "ALTER TABLE table_name ADD CONSTRAINT constraint_name UNIQUE (column_name1, column_name2, ...)",
       "not_null": "ALTER TABLE products ALTER COLUMN product_no SET NOT NULL;",
-      "change_type": "ALTER TABLE table_name ALTER COLUMN column_name TYPE newType;"
+      "change_type": "ALTER TABLE table_name ALTER COLUMN column_name TYPE newType;",
+      "add_default": "ALTER TABLE table_name ALTER COLUMN column_name SET DEFAULT value"
     }
   }
   
