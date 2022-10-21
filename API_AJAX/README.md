@@ -35,3 +35,39 @@ Now, it selects the element that will receive the data by using document.getElem
 [ ] -> Square brackets represent an array.
 { } -> Curly brackets represent an object.
 " " -> Double quotes represent a string. They are also used for key names in JSON.
+
+Remember how to access data in arrays and objects. Arrays use bracket notation to access a specific index of an item. Objects use either bracket or dot notation to access the value of a given property. Here's an example that prints the altText property of the first cat photo - note that the parsed JSON data in the editor is saved in a variable called json:
+
+
+Get Geolocation Data to Find A User's GPS Coordinates
+Another cool thing you can do is access your user's current location. Every browser has a built in navigator that can give you this information.
+
+The navigator will get the user's current longitude and latitude.
+
+You will see a prompt to allow or block this site from knowing your current location. The challenge can be completed either way, as long as the code is correct.
+
+By selecting allow, you will see the text on the output phone change to your latitude and longitude.
+
+Here's code that does this:
+
+if (navigator.geolocation){
+  navigator.geolocation.getCurrentPosition(function(position) {
+    document.getElementById('data').innerHTML="latitude: " + position.coords.latitude + "<br>longitude: " + position.coords.longitude;
+  });
+}
+
+
+JavaScript's XMLHttpRequest method is also used to post data to a server. Here's an example:
+```js
+const xhr = new XMLHttpRequest();
+xhr.open('POST', url, true);
+xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4 && xhr.status === 201){
+    const serverResponse = JSON.parse(xhr.response);
+    document.getElementsByClassName('message')[0].textContent = serverResponse.userName + serverResponse.suffix;
+  }
+};
+const body = JSON.stringify({ userName: userName, suffix: ' loves cats!' });
+xhr.send(body);
+```
