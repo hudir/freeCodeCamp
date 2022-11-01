@@ -179,3 +179,7 @@ myDataBase.findOneAndUpdate(
 
 findOneAndUpdate allows you to search for an object and update it. If the object doesn't exist, it will be inserted and made available to the callback function. In this example, we always set last_login, increment the login_count by 1, and only populate the majority of the fields when a new object (new user) is inserted. Notice the use of default values. Sometimes a profile returned won't have all the information filled out or the user will keep it private. In this case, you handle it to prevent an error.
 
+Authentication with Socket.IO
+Currently, you cannot determine who is connected to your web socket. While req.user contains the user object, that's only when your user interacts with the web server, and with web sockets you have no req (request) and therefore no user data. One way to solve the problem of knowing who is connected to your web socket is by parsing and decoding the cookie that contains the passport session then deserializing it to obtain the user object. Luckily, there is a package on NPM just for this that turns a once complex task into something simple!
+
+passport.socketio@~3.7.0, connect-mongo@~3.2.0, and cookie-parser@~1.4.5 have already been added as dependencies. Require them as passportSocketIo, MongoStore, and cookieParser respectively. Also, we need to initialize a new memory store, from express-session which we previously required. It should look like this:
