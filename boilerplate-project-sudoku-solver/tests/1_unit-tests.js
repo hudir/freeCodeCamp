@@ -42,10 +42,38 @@ suite('Unit Tests', () => {
 
     test('valid row placement', done => {
         solutionsArr.forEach(x=> {
-            console.log(x)
             assert.isOk(new Solver().checkRowPlacement(x))
         })
         done()
+    })
+
+    test('invalid row placement', done => {   
+      assert.isNotOk(new Solver().checkRowPlacement("887549163531672894649831527496157382218396475753284916962415738185763249374928651"))
+      done()
+    })
+
+    test('valid column placement', done => {
+        solutionsArr.forEach(x=> {
+            assert.isOk(new Solver().checkColPlacement(x))
+        })
+        done()
+    })
+
+    test('invalid column placement', done => {   
+      assert.isNotOk(new Solver().checkColPlacement("987549163531672894649831527496157382218396475753284916962415738185763249374928651"))
+      done()
+    })
+
+    test('valid region (3x3 grid) placement', done => {
+        solutionsArr.forEach(x=> {
+            assert.isOk(new Solver().checkRegionPlacement(x))
+        })
+        done()
+    })
+
+    test('invalid region (3x3 grid) placement', done => {   
+      assert.isNotOk(new Solver().checkRegionPlacement("987549163531672894649831527496157382218396475753284916962415738185763249374928651"))
+      done()
     })
 
 });

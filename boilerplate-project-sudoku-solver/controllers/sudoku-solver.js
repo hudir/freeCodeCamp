@@ -20,28 +20,29 @@ class SudokuSolver {
   checkRowPlacement(puzzleString, row, column, value) {
     let rowArr = [];
     for(let i = 0 ; i < puzzleString.length; i++) {
-      rowArr.push(puzzleString[i])
       // when there is a row, check it, if pass, empty it and go on, else return false
-      if(i % 8 == 0 && i != 0) {
+      if(i % 9 == 0 && i != 0) {
         if(!this.checkBasic(rowArr.join(''))){
-          console.log(rowArr)
           return false;
         }
         rowArr = []
       };
+      rowArr.push(puzzleString[i])
     }
     return true
   }
 
   checkColPlacement(puzzleString , row, column, value) {
     const columns = 9;
-    for (let i = 1; i <= columns; i++){
-      let columnArr = [puzzleString[i-1]];
-      for (let j = i * 9 ; j < 81; j+=9){
+    for (let i = 0; i < columns; i++){
+      let columnArr = [];
+      for (let j = i ; j < 81; j+=9){
         columnArr.push(puzzleString[j])
       };
-      if(!this.checkBasic(columnArr.join(''))) 
+      if(!this.checkBasic(columnArr.join(''))) {
         return false
+      }
+        
     }
     return true
   }
@@ -59,8 +60,10 @@ class SudokuSolver {
         regionArr.push(puzzleString[RegionRow.b + i * j])
         regionArr.push(puzzleString[RegionRow.c + i * j])
       }
-      if(!this.checkBasic(regionArr.join(''))) 
-      return false
+      if(!this.checkBasic(regionArr.join(''))) {
+        console.log(regionArr)
+        return false
+      }
     }
     return true
   }
