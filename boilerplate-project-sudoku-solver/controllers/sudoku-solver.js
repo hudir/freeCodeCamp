@@ -53,18 +53,18 @@ class SudokuSolver {
       b : 1,
       c : 2
     }
-    for(let i = 1; i <= 9; i++){ // there are 9 regions
-      let regionArr = []
-      for(let j = 0; j <= 18; j += 9) {
-        regionArr.push(puzzleString[RegionRow.a + i * j])
-        regionArr.push(puzzleString[RegionRow.b + i * j])
-        regionArr.push(puzzleString[RegionRow.c + i * j])
-      }
-      if(!this.checkBasic(regionArr.join(''))) {
-        console.log(regionArr)
-        return false
-      }
-    }
+    // for(let i = 1; i <= 81 ; i % 9 == 0? i+=27 : i+=3){ // there are 9 regions
+    //   let regionArr = []
+    //   for(let j = 0; j <= 18; j += 9) {
+    //     regionArr.push(puzzleString[RegionRow.a + i * j])
+    //     regionArr.push(puzzleString[RegionRow.b + i * j])
+    //     regionArr.push(puzzleString[RegionRow.c + i * j])
+    //   }
+    //   if(!this.checkBasic(regionArr.join(''))) {
+    //     console.log(regionArr)
+    //     return false
+    //   }
+    // }
     return true
   }
 
