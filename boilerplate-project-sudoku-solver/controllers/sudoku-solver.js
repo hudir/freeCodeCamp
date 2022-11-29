@@ -71,6 +71,37 @@ class SudokuSolver {
 
   solve(puzzleString) {
     if(!this.validate(puzzleString)) return false
+
+    // convert all . to [1-9]
+    const sudoku = puzzleString.split('').map(x=>{
+      if (x == '.') {
+        return this.basicArr
+      } else return x
+    })
+    
+    // all possibility of a row
+    let rowNumArr = [] , getNumRound = true
+    for(let i = 0 ; i < sudoku.length; i++) {
+      if(getNumRound) {
+        if (typeof sudoku[i] == "number" || typeof sudoku[i] == "string") rowNumArr.push(+sudoku[i])
+      } else {
+        if (Array.isArray(sudoku[i]) && rowNumArr.length > 0) {
+          rowNumArr.forEach(n => {
+            sudoku[i] = sudoku[i].filter(x => x != n)
+          })
+        }
+      }
+      if((i + 1) % 9 == 0 && i != 0 && getNumRound) {
+        i=i-9
+        getNumRound = false;
+      } else if((i + 1) % 9 == 0 && i != 0 && !getNumRound){
+        getNumRound = true;
+        rowNumArr = []
+      }
+    }
+    
+    console.log(sudoku)
+    return sudoku
     
   }
 }

@@ -76,4 +76,12 @@ suite('Unit Tests', () => {
       done()
     })
 
+    test('sudoku solving, row', done => {
+
+        console.log(puzzlesAndSolutions[0][0])
+        new Solver().solve(puzzlesAndSolutions[0][0])
+        
+        done()
+    })
+
 });
