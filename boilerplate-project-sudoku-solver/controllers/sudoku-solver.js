@@ -48,23 +48,24 @@ class SudokuSolver {
   }
 
   checkRegionPlacement(puzzleString , row, column, value) {
-    const RegionRow = {
-      a : 0,
-      b : 1,
-      c : 2
+    for(let i = 0; i < 81 ;  i+=27) {
+      let regionArr = []
+      for(let j = 0; j < 9 ; j++) {
+        if(regionArr.length < 9) {
+          regionArr = [...regionArr, puzzleString[i + j], puzzleString[i + j + 9], puzzleString[i + j + 18]]
+        } else {
+          if (!this.checkBasic(regionArr.join(''))) {
+            // console.log(regionArr.join(''), "  false")
+            return false
+          }
+          else {
+            // console.log(regionArr.join(''), "   true")
+            regionArr = [puzzleString[i + j], puzzleString[i + j + 9], puzzleString[i + j + 18]]
+          } 
+        } 
+      }
     }
-    // for(let i = 1; i <= 81 ; i % 9 == 0? i+=27 : i+=3){ // there are 9 regions
-    //   let regionArr = []
-    //   for(let j = 0; j <= 18; j += 9) {
-    //     regionArr.push(puzzleString[RegionRow.a + i * j])
-    //     regionArr.push(puzzleString[RegionRow.b + i * j])
-    //     regionArr.push(puzzleString[RegionRow.c + i * j])
-    //   }
-    //   if(!this.checkBasic(regionArr.join(''))) {
-    //     console.log(regionArr)
-    //     return false
-    //   }
-    // }
+   
     return true
   }
 
