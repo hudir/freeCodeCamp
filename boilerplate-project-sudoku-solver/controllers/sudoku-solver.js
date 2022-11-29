@@ -70,6 +70,7 @@ class SudokuSolver {
   }
 
   solve(puzzleString) {
+    if(!this.validate(puzzleString)) return false
     
   }
 }
