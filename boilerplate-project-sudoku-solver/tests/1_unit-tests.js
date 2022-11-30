@@ -77,10 +77,9 @@ suite('Unit Tests', () => {
     })
 
     test('sudoku solving, row', done => {
-
-        console.log(puzzlesAndSolutions[0][0])
-        new Solver().solve(puzzlesAndSolutions[0][0])
-        
+        puzzlesAndSolutions.forEach(el => {
+            assert.equal( new Solver().solve(el[0]), el[1])
+        })    
         done()
     })
 
