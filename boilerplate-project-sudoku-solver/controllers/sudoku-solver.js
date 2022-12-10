@@ -16,12 +16,13 @@ class SudokuSolver {
   validate(puzzleString) {
     // check the whole puzzle
     const regex = /[1-9.]/;
-    if (
-      puzzleString.length == 81 &&
-      puzzleString.split("").every((x) => regex.test(x))
-    )
-      return true;
-    return false;
+    if (puzzleString.length !== 81)
+      return { error: 'Expected puzzle to be 81 characters long' };
+
+    else if (puzzleString.split("").every((x) => regex.test(x)))
+      return { error: 'Invalid characters in puzzle' }
+    
+    return {validate : true}
   }
 
   checkRowPlacement(puzzleString, row, column, value) {
