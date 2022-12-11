@@ -92,25 +92,26 @@ class SudokuSolver {
    */
   checkCoordinate(puzzleString, coordinate, value) {
     // console.log("A".charCodeAt(0)) 65
-    // console.log("B".charCodeAt(0)) 66
-    //      .
-    //      .
-    //      .
-    // console.log("H".charCodeAt(0)) 71
+    //      ...
     // console.log("I".charCodeAt(0)) 72
+    const placedIndex = (coordinate[0].charCodeAt(0) - 65) * 9 + +coordinate[1] - 1
 
     // get row
     const rowStartAt = (coordinate[0].charCodeAt(0) - 65) * 9
     const row = []
     for(let i = rowStartAt; i < rowStartAt+9; i++){
-      row.push(puzzleString[i])
+      if(i != placedIndex) {
+        row.push(puzzleString[i])
+      }
     }
 
     // get column
     const colStartAt = coordinate[1] - 1
     const col = []
     for(let i = colStartAt; i < 81; i+=9 ){
-      col.push(puzzleString[i])
+      if(i != placedIndex) {
+        col.push(puzzleString[i])
+      }
     }
 
     // get region
@@ -136,16 +137,22 @@ class SudokuSolver {
     const regionStartAt = regionRowStartAt + regionColStartAt
     const region = []
     
-    for (let row = 0; row <= 18 ; row += 9) {
+    for (let rowNum = 0; rowNum <= 18 ; rowNum += 9) {
       for (let i = 0; i < 3; i++) {
-        region.push(puzzleString[regionStartAt + i + row])
+        if (regionStartAt + i + rowNum != placedIndex) {
+          region.push(puzzleString[regionStartAt + i + rowNum])
+        }
       }
     }
-
-    console.log(region)
+    // console.log(puzzleString[placedIndex], row, col , region)
     // check
+    const conflict = []
+    if (row.some(x => x==value)) conflict.push('row')
+    if (col.some(x => x==value)) conflict.push('col')
+    if (region.some(x => x==value)) conflict.push('region')
 
-
+    if(conflict.length == 0) return {"valid": true}
+    else return {"valid": false, "conflict": conflict}
   }
 
   solve(puzzleString) {
@@ -272,4 +279,4 @@ class SudokuSolver {
 module.exports = SudokuSolver;
 
 
-new SudokuSolver().checkCoordinate('..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..', 'I9', 2)
+// console.log(new SudokuSolver().checkCoordinate('..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..', 'F2', 3))
