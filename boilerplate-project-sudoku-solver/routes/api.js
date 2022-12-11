@@ -8,19 +8,19 @@ module.exports = function (app) {
 
   app.route('/api/check')
     .post((req, res) => {
-      if(!req.body.puzzle || !req.body.coordinate || !req.body.value) return res.send({ error: 'Required field(s) missing' })
+      if(!req.body.puzzle || !req.body.coordinate || !req.body.value) return res.json({ error: 'Required field(s) missing' })
 
-      if(SudokuSolver.validate(req.body.puzzle).error) return res.send(SudokuSolver.validate(req.body.puzzle).error)
+      if(solver.validate(req.body.puzzle).error) return res.json(solver.validate(req.body.puzzle).error)
 
-      // if(!SudokuSolver.solve(req.body.puzzle)) return res.send({ error: 'Puzzle cannot be solved' })
+      // if(!solver.solve(req.body.puzzle)) return res.json({ error: 'Puzzle cannot be solved' })
 
       let puzzle = req.body.puzzle
       , coordinate = {row: req.body.coordinate[0], num: req.body.coordinate[1]}
       , value = req.body.value;
 
-      if(isNaN(+ coordinate.num) || coordinate.num < 1 || coordinate.num > 9 || coordinate.row.charCodeAt(0) < 65 || coordinate.row.charCodeAt(0) > 73) return res.send({ error: 'Invalid coordinate'})
+      if(isNaN(+ coordinate.num) || coordinate.num < 1 || coordinate.num > 9 || coordinate.row.charCodeAt(0) < 65 || coordinate.row.charCodeAt(0) > 73) return res.json({ error: 'Invalid coordinate'})
 
-      if(isNaN(+ value) ||  value < 1 || value > 9) res.send({ error: 'Invalid value' })
+      if(isNaN(+ value) ||  value < 1 || value > 9) res.json({ error: 'Invalid value' })
 
 
 
@@ -29,12 +29,15 @@ module.exports = function (app) {
     
   app.route('/api/solve')
     .post((req, res) => {
-      if(!req.body.puzzle) return res.send({ error: 'Required field missing' })
+ 
+      if(!req.body.puzzle) return res.status(200).json({ error: 'Required field missing' })
 
-      if(SudokuSolver.validate(req.body.puzzle).error) return res.send(SudokuSolver.validate(req.body.puzzle).error)
+      if(solver.validate(req.body.puzzle).error) {
+        return res.status(200).json({error : solver.validate(req.body.puzzle).error})
+      }
 
-      if(!SudokuSolver.solve(req.body.puzzle)) return res.send({ error: 'Puzzle cannot be solved' })
-       
-      res.send({solution: SudokuSolver.solve(req.body.puzzle)})
+      if(!solver.solve(req.body.puzzle)) return res.status(200).json({ error: 'Puzzle cannot be solved' })
+ 
+      res.status(200).json({solution: solver.solve(req.body.puzzle)})
     });
 };

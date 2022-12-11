@@ -118,7 +118,7 @@ class SudokuSolver {
     
     let solved = false 
     let round = 0
-    while(solved == false && round <= 9999) {
+    while(solved == false && round < 9999) {
       sudoku = eliminatePossibilityFromRowColRegion(eliminatePossibility, sudoku)
 
       sudoku = sudoku.map(el => {
@@ -132,7 +132,7 @@ class SudokuSolver {
     }
  
     // console.log(sudoku.join(''))
-    if (round == 9999) return false
+    if (round >= 9990) return false
     else return sudoku.join('');
 
     function eliminatePossibilityFromRowColRegion(
