@@ -12,19 +12,15 @@ module.exports = function (app) {
 
       if(solver.validate(req.body.puzzle).error) return res.json(solver.validate(req.body.puzzle).error)
 
-      // if(!solver.solve(req.body.puzzle)) return res.json({ error: 'Puzzle cannot be solved' })
-
       let puzzle = req.body.puzzle
       , coordinate = {row: req.body.coordinate[0], num: req.body.coordinate[1]}
       , value = req.body.value;
 
       if(isNaN(+ coordinate.num) || coordinate.num < 1 || coordinate.num > 9 || coordinate.row.charCodeAt(0) < 65 || coordinate.row.charCodeAt(0) > 73) return res.json({ error: 'Invalid coordinate'})
 
-      if(isNaN(+ value) ||  value < 1 || value > 9) res.json({ error: 'Invalid value' })
+      if(isNaN(+ value) ||  value < 1 || value > 9) return res.json({ error: 'Invalid value' })
 
-
-
-
+      res.json(solver.checkCoordinate(puzzle, req.body.coordinate, value))
     });
     
   app.route('/api/solve')
