@@ -8,7 +8,22 @@ module.exports = function (app) {
 
   app.route('/api/check')
     .post((req, res) => {
-      const puzzle = req.body.puzzle
+      if(!req.body.puzzle || !req.body.coordinate || !req.body.value) return res.send({ error: 'Required field(s) missing' })
+
+      if(SudokuSolver.validate(req.body.puzzle).error) return res.send(SudokuSolver.validate(req.body.puzzle).error)
+
+      // if(!SudokuSolver.solve(req.body.puzzle)) return res.send({ error: 'Puzzle cannot be solved' })
+
+      let puzzle = req.body.puzzle
+      , coordinate = {row: req.body.coordinate[0], num: req.body.coordinate[1]}
+      , value = req.body.value;
+
+      if(isNaN(+ coordinate.num) || coordinate.num < 1 || coordinate.num > 9 || coordinate.row.charCodeAt(0) < 65 || coordinate.row.charCodeAt(0) > 73) return res.send({ error: 'Invalid coordinate'})
+
+      if(isNaN(+ value) ||  value < 1 || value > 9) res.send({ error: 'Invalid value' })
+
+
+
 
     });
     
@@ -16,10 +31,10 @@ module.exports = function (app) {
     .post((req, res) => {
       if(!req.body.puzzle) return res.send({ error: 'Required field missing' })
 
-      if(SudokuSolver.validate(req.body.puzzle).error) res.send(SudokuSolver.validate(req.body.puzzle).error)
+      if(SudokuSolver.validate(req.body.puzzle).error) return res.send(SudokuSolver.validate(req.body.puzzle).error)
 
-      if(!SudokuSolver.checkRowPlacement(req.body.puzzle) || !SudokuSolver.checkColPlacement(req.body.puzzle) || !SudokuSolver.checkRegionPlacement(req.body.puzzle)) res.send({ error: 'Puzzle cannot be solved' })
-      
-
+      if(!SudokuSolver.solve(req.body.puzzle)) return res.send({ error: 'Puzzle cannot be solved' })
+       
+      res.send({solution: SudokuSolver.solve(req.body.puzzle)})
     });
 };

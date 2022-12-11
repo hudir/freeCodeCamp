@@ -8,21 +8,21 @@ let solver;
 
 suite('Unit Tests', () => {
     test('valid puzzle', done => {
-        assert.isOk(new Solver().validate('1'.repeat(81)))
-        assert.isOk(new Solver().validate('9'.repeat(81)))
-        assert.isOk(new Solver().validate('.'.repeat(81)))
+        assert.isTrue((new Solver().validate('1'.repeat(81))).validate)
+        assert.isTrue((new Solver().validate('9'.repeat(81))).validate)
+        assert.isTrue((new Solver().validate('.'.repeat(81))).validate)
         done()
     })
 
     test('invalid characters', done => {
-        assert.isNotOk(new Solver().validate('a'.repeat(81)))
+        assert.equal(new Solver().validate('a'.repeat(81)).error, 'Invalid characters in puzzle')
         done()
     })
 
     test('not 81 characters', done => {
-        assert.isNotOk(new Solver().validate('1'.repeat(22)))
-        assert.isNotOk(new Solver().validate('9'.repeat(66)))
-        assert.isNotOk(new Solver().validate('.'.repeat(80)))
+        assert.equal(new Solver().validate('1'.repeat(22)).error, 'Expected puzzle to be 81 characters long')
+        assert.equal(new Solver().validate('9'.repeat(66)).error, 'Expected puzzle to be 81 characters long')
+        assert.equal(new Solver().validate('.'.repeat(80)).error, 'Expected puzzle to be 81 characters long')
         done()
     })
 

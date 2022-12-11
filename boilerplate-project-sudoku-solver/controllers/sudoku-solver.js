@@ -19,7 +19,7 @@ class SudokuSolver {
     if (puzzleString.length !== 81)
       return { error: 'Expected puzzle to be 81 characters long' };
 
-    else if (puzzleString.split("").every((x) => regex.test(x)))
+    if (!puzzleString.split("").every((x) => regex.test(x)))
       return { error: 'Invalid characters in puzzle' }
     
     return {validate : true}
@@ -84,6 +84,28 @@ class SudokuSolver {
     return true;
   }
 
+  /**
+   * 
+   * @param {*} puzzleString 
+   * @param {*} coordinate  the coordinate is the letter A-I indicating the row, followed by a number 1-9 indicating the column(A1)
+   * @param {*} value value is a number from 1-9
+   */
+  checkCoordinate(puzzleString, coordinate, value) {
+    // console.log("A".charCodeAt(0)) 65
+    // console.log("B".charCodeAt(0)) 66
+    // console.log("C".charCodeAt(0))
+    // console.log("D".charCodeAt(0))
+    // console.log("E".charCodeAt(0))
+    // console.log("F".charCodeAt(0))
+    // console.log("G".charCodeAt(0))
+    // console.log("H".charCodeAt(0))
+    // console.log("I".charCodeAt(0)) 72
+    
+
+
+
+  }
+
   solve(puzzleString) {
     if (!this.validate(puzzleString)) return false;
 
@@ -96,7 +118,7 @@ class SudokuSolver {
     
     let solved = false 
     let round = 0
-    while(solved == false) {
+    while(solved == false && round <= 9999) {
       sudoku = eliminatePossibilityFromRowColRegion(eliminatePossibility, sudoku)
 
       sudoku = sudoku.map(el => {
@@ -110,7 +132,8 @@ class SudokuSolver {
     }
  
     // console.log(sudoku.join(''))
-    return sudoku.join('');
+    if (round == 9999) return false
+    else return sudoku.join('');
 
     function eliminatePossibilityFromRowColRegion(
       eliminatePossibility,
@@ -205,3 +228,6 @@ class SudokuSolver {
 }
 
 module.exports = SudokuSolver;
+
+
+// new SudokuSolver().checkCoordinate()
