@@ -93,15 +93,57 @@ class SudokuSolver {
   checkCoordinate(puzzleString, coordinate, value) {
     // console.log("A".charCodeAt(0)) 65
     // console.log("B".charCodeAt(0)) 66
-    // console.log("C".charCodeAt(0))
-    // console.log("D".charCodeAt(0))
-    // console.log("E".charCodeAt(0))
-    // console.log("F".charCodeAt(0))
-    // console.log("G".charCodeAt(0))
-    // console.log("H".charCodeAt(0))
+    //      .
+    //      .
+    //      .
+    // console.log("H".charCodeAt(0)) 71
     // console.log("I".charCodeAt(0)) 72
-    
 
+    // get row
+    const rowStartAt = (coordinate[0].charCodeAt(0) - 65) * 9
+    const row = []
+    for(let i = rowStartAt; i < rowStartAt+9; i++){
+      row.push(puzzleString[i])
+    }
+
+    // get column
+    const colStartAt = coordinate[1] - 1
+    const col = []
+    for(let i = colStartAt; i < 81; i+=9 ){
+      col.push(puzzleString[i])
+    }
+
+    // get region
+    let regionColStartAt = 0 
+        , regionRowStartAt = 0
+    if(coordinate[1]/3 <= 1) {
+      regionColStartAt=0
+    } else if(coordinate[1]/3 <= 2) {
+      regionColStartAt=3
+    } else {
+      regionColStartAt=6
+    }
+
+    let rowRegion = (coordinate[0].charCodeAt(0) - 65) / 3
+    if(rowRegion < 1) {
+      regionRowStartAt= 0
+    } else if(rowRegion < 2) {
+      regionRowStartAt= 27
+    } else {
+      regionRowStartAt= 54
+    }
+    // console.log(regionRowStartAt ,regionColStartAt)
+    const regionStartAt = regionRowStartAt + regionColStartAt
+    const region = []
+    
+    for (let row = 0; row <= 18 ; row += 9) {
+      for (let i = 0; i < 3; i++) {
+        region.push(puzzleString[regionStartAt + i + row])
+      }
+    }
+
+    console.log(region)
+    // check
 
 
   }
@@ -230,4 +272,4 @@ class SudokuSolver {
 module.exports = SudokuSolver;
 
 
-// new SudokuSolver().checkCoordinate()
+new SudokuSolver().checkCoordinate('..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..', 'I9', 2)
