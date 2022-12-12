@@ -13,7 +13,7 @@ module.exports = function (app) {
       if(solver.validate(req.body.puzzle).error) return res.status(200).json({error : solver.validate(req.body.puzzle).error})
 
       let puzzle = req.body.puzzle
-      , coordinate = {row: req.body.coordinate[0], num: req.body.coordinate[1]}
+      , coordinate = {row: req.body.coordinate[0], num: +req.body.coordinate.slice(1)}
       , value = req.body.value;
 
       if(isNaN(+ coordinate.num) || coordinate.num < 1 || coordinate.num > 9 || coordinate.row.charCodeAt(0) < 65 || coordinate.row.charCodeAt(0) > 73) {

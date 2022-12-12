@@ -181,8 +181,10 @@ class SudokuSolver {
     }
  
     // console.log(sudoku.join(''))
-    if (round >= 9990) return false
-    else return sudoku.join('');
+    const solution = sudoku.join('')
+    if (round >= 9990 || !this.checkRowPlacement(solution) || !this.checkColPlacement(solution) || !this.checkRegionPlacement(solution)) return false
+  
+    else return solution;
 
     function eliminatePossibilityFromRowColRegion(
       eliminatePossibility,
