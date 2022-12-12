@@ -148,7 +148,7 @@ class SudokuSolver {
     // check
     const conflict = []
     if (row.some(x => x==value)) conflict.push("row")
-    if (col.some(x => x==value)) conflict.push("col")
+    if (col.some(x => x==value)) conflict.push("column")
     if (region.some(x => x==value)) conflict.push("region")
 
     if(conflict.length == 0) return {"valid": true}
