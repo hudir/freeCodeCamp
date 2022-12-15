@@ -7,7 +7,13 @@ class Translator {
     noTranslation = "Everything looks good to me!"
 
     trans(text, locale){
-        let arr = text.split(' ')
+        let translated = false;
+        if(locale == "american-to-british"){
+            for(let key in americanOnly){}
+            for(let key in americanToBritishSpelling){}
+
+        }
+
 
     }
 
