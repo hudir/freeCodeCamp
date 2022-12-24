@@ -13,11 +13,10 @@ for (let key in americanToBritishTitles) {
 }
 
 class Translator {
-    noTranslation = "Everything looks good to me!"
 
     trans(text, locale){
         let translated = false;
-        if(locale == "american-to-british"){
+        if(locale == "american-to-british"){        
             if(this.checkAndReplace(text, americanOnly).translated){
                 text = this.checkAndReplace(text, americanOnly).text
                 translated = true
@@ -47,7 +46,7 @@ class Translator {
             }
         }
 
-        return translated ? text : this.noTranslation
+        return translated ? text : "Everything looks good to me!"
     }
 
     addHighlight(str){
@@ -58,10 +57,15 @@ class Translator {
         let translated = false;
         if(!title) {
             for(let key in dictionary){
-                if(text.includes(key)){
+              
+                if(text.indexOf(key) !== -1 && text[text.indexOf(key)-1]=== ' ' && (text.indexOf(key) + key.length === text.length  || text[text.indexOf(key) + key.length ]  === ' ')){
                     text = text.replaceAll(key, this.addHighlight(dictionary[key]))
                     translated = true;
-                }
+                } 
+                // else if(text.toLowerCase().includes(key)){
+                //     text = text.replaceAll(key, this.addHighlight(dictionary[key]))
+                //     translated = true;
+                // }
             }
         } else { // dealing with titles
             for(let key in dictionary){
@@ -75,10 +79,9 @@ class Translator {
                     text = text.replaceAll(key, value)
                     translated = true;
                 }
-            }
-            
+            }  
         }
-        return {translated, text}
+        return {translated:translated, text:text}
     }
 
 }
