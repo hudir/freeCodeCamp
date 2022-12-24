@@ -26,9 +26,9 @@ class Translator {
         translated = true;
       }
       if (
-        this.checkAndReplace(text, americanToBritishTitles, true).translated
+        this.checkAndReplace(text, americanToBritishTitles).translated
       ) {
-        text = this.checkAndReplace(text, americanToBritishTitles, true).text;
+        text = this.checkAndReplace(text, americanToBritishTitles).text;
         translated = true;
       }
     } else {
@@ -43,9 +43,9 @@ class Translator {
         translated = true;
       }
       if (
-        this.checkAndReplace(text, britishToAmericanTitles, true).translated
+        this.checkAndReplace(text, britishToAmericanTitles).translated
       ) {
-        text = this.checkAndReplace(text, britishToAmericanTitles, true).text;
+        text = this.checkAndReplace(text, britishToAmericanTitles).text;
         translated = true;
       }
     }
@@ -57,12 +57,11 @@ class Translator {
     return `<span class="highlight">${str}</span>`;
   }
 
-  checkAndReplace(text, dictionary, title) {
+  checkAndReplace(text, dictionary) {
     let translated = false;
-    const textLower = text.toLowerCase()
-    let res = text
 
     for (let key in dictionary) {
+      let textLower = text.toLowerCase()
       if (
         textLower.indexOf(key) !== -1 &&
         text[textLower.indexOf(key) - 1] === " " &&
@@ -70,19 +69,19 @@ class Translator {
           text[textLower.indexOf(key) + key.length] === " ")
       ) {
         const highlightedText = this.addHighlight(dictionary[key])
-        res = res.split("")
-        res
+
+        text = text.split("")
+        text
           .splice(
             textLower.indexOf(key),
             key.length,
             highlightedText
           )
-          res = res.join("")
+        text = text.join("")
         translated = true;
       }
     }
-
-    return { translated: translated, text: res };
+    return { translated: translated, text: text };
   }
 }
 
