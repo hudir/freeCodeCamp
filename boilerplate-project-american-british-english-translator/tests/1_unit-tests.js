@@ -42,8 +42,8 @@ test('To play hooky means to skip class or work', done => {
     done()
 })
 // // Translate No Mr. Bond, I expect you to die. to British English
-// test('', done => {
-//     assert.equal(new Translator().trans("", toB), ``)
+// test('No Mr. Bond, I expect you to die', done => {
+//     assert.equal(new Translator().trans("No Mr. Bond, I expect you to die", toB), ``)
 //     done()
 // })
 // // Translate Dr. Grosh will see you now. to British English
