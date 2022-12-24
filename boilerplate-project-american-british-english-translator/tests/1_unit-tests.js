@@ -41,21 +41,21 @@ test('To play hooky means to skip class or work', done => {
     assert.equal(new Translator().trans("To play hooky means to skip class or work", toB), `To <span class="highlight">bunk off</span> means to skip class or work`)
     done()
 })
-// // Translate No Mr. Bond, I expect you to die. to British English
-// test('No Mr. Bond, I expect you to die', done => {
-//     assert.equal(new Translator().trans("No Mr. Bond, I expect you to die", toB), ``)
-//     done()
-// })
-// // Translate Dr. Grosh will see you now. to British English
-// test('', done => {
-//     assert.equal(new Translator().trans("", toB), ``)
-//     done()
-// })
-// // Translate Lunch is at 12:15 today. to British English
-// test('', done => {
-//     assert.equal(new Translator().trans("", toB), ``)
-//     done()
-// })
+// Translate No Mr. Bond, I expect you to die. to British English
+test('No Mr. Bond, I expect you to die', done => {
+    assert.equal(new Translator().trans("No Mr. Bond, I expect you to die", toB), `No <span class="highlight">Mr</span> Bond, I expect you to die`)
+    done()
+})
+// Translate Dr. Grosh will see you now. to British English
+test('Dr. Grosh will see you now', done => {
+    assert.equal(new Translator().trans("Dr. Grosh will see you now", toB), `<span class="highlight">Dr</span> Grosh will see you now`)
+    done()
+})
+// Translate Lunch is at 12:15 today. to British English
+test('Lunch is at 12:15 today', done => {
+    assert.equal(new Translator().trans("Lunch is at 12:15 today", toB), `Lunch is at <span class="highlight">12.15</span> today`)
+    done()
+})
 // Translate We watched the footie match for a while. to American English
 // test('', done => {
 //     assert.equal(new Translator().trans("", toA), ``)
