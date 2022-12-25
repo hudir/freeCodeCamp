@@ -117,6 +117,14 @@ test('Highlight translation in I ate yogurt for breakfast.', done => {
     done()
 })
 // Highlight translation in We watched the footie match for a while.
+test('Highlight translation in We watched the footie match for a while', done => {
+    assert.equal(new Translator().trans("We watched the footie match for a while", toA), `We watched the <span class="highlight">soccer</span> match for a while`)
+    done()
+})
 // Highlight translation in Paracetamol takes up to an hour to work.
+test('Highlight translation in Paracetamol takes up to an hour to work', done => {
+    assert.equal(new Translator().trans("Paracetamol takes up to an hour to work", toA), `<span class="highlight">Tylenol</span> takes up to an hour to work`)
+    done()
+})
 
 });
