@@ -8,7 +8,7 @@ module.exports = function (app) {
 
   app.route('/api/translate')
     .post((req, res) => { 
-      // console.log(req.body, "request",!req.body.hasOwnProperty('text') || !req.body.hasOwnProperty('locale'))
+
       if(req.body.hasOwnProperty('text') && req.body.text == "") {
         return res.json({ error: 'No text to translate' })
       } else if(!req.body.hasOwnProperty('text') || !req.body.hasOwnProperty('locale')) {
@@ -19,6 +19,6 @@ module.exports = function (app) {
         return res.json({ error: 'Invalid value for locale field' })
       }
 
-      res.json({translation: translator.trans(req.body.text, req.body.locale)})
+      res.json({ text: req.body.text, translation: translator.trans(req.body.text, req.body.locale)})
     });
 };
