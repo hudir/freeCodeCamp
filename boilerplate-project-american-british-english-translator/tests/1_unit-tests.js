@@ -57,19 +57,55 @@ test('Lunch is at 12:15 today', done => {
     done()
 })
 // Translate We watched the footie match for a while. to American English
-// test('', done => {
-//     assert.equal(new Translator().trans("", toA), ``)
-//     done()
-// })
+test('We watched the footie match for a while', done => {
+    assert.equal(new Translator().trans("We watched the footie match for a while", toA), `We watched the <span class="highlight">soccer</span> match for a while`)
+    done()
+})
 // Translate Paracetamol takes up to an hour to work. to American English
+test('Paracetamol takes up to an hour to work', done => {
+    assert.equal(new Translator().trans("Paracetamol takes up to an hour to work", toA), `<span class="highlight">Tylenol</span> takes up to an hour to work`)
+    done()
+})
 // Translate First, caramelise the onions. to American English
+test('First, caramelise the onions', done => {
+    assert.equal(new Translator().trans("First, caramelise the onions", toA), `First, <span class="highlight">caramelize</span> the onions`)
+    done()
+})
 // Translate I spent the bank holiday at the funfair. to American English
+test('I spent the bank holiday at the funfair', done => {
+    assert.equal(new Translator().trans("I spent the bank holiday at the funfair", toA), `I spent the <span class="highlight">public holiday</span> at the <span class="highlight">carnival</span>`)
+    done()
+})
 // Translate I had a bicky then went to the chippy. to American English
+test('I had a bicky then went to the chippy', done => {
+    assert.equal(new Translator().trans("I had a bicky then went to the chippy", toA), `I had a <span class="highlight">cookie</span> then went to the <span class="highlight">fish-and-chip shop</span>`)
+    done()
+})
 // Translate I've just got bits and bobs in my bum bag. to American English
+test(`I've just got bits and bobs in my bum bag`, done => {
+    assert.equal(new Translator().trans("I've just got bits and bobs in my bum bag", toA), `I've just got <span class="highlight">odds and ends</span> in my <span class="highlight">fanny pack</span>`)
+    done()
+})
 // Translate The car boot sale at Boxted Airfield was called off. to American English
+test('The car boot sale at Boxted Airfield was called off', done => {
+    assert.equal(new Translator().trans("The car boot sale at Boxted Airfield was called off", toA), `The <span class="highlight">swap meet</span> at Boxted Airfield was called off`)
+    done()
+})
 // Translate Have you met Mrs Kalyani? to American English
+test('Have you met Mrs Kalyani?', done => {
+    assert.equal(new Translator().trans("Have you met Mrs Kalyani?", toA), `Have you met <span class="highlight">Mrs.</span> Kalyani?`)
+    done()
+})
 // Translate Prof Joyner of King's College, London. to American English
+test(`Prof Joyner of King's College, London`, done => {
+    assert.equal(new Translator().trans("Prof Joyner of King's College, London", toA), `<span class="highlight">Prof.</span> Joyner of King's College, London`)
+    done()
+})
 // Translate Tea time is usually around 4 or 4.30. to American English
+test('Tea time is usually around 4 or 4.30', done => {
+    assert.equal(new Translator().trans("Tea time is usually around 4 or 4.30", toA), `Tea time is usually around 4 or <span class="highlight">4:30</span>`)
+    done()
+})
 // Highlight translation in Mangoes are my favorite fruit.
 // Highlight translation in I ate yogurt for breakfast.
 // Highlight translation in We watched the footie match for a while.

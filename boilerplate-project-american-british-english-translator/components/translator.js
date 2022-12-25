@@ -40,24 +40,22 @@ class Translator {
       if (this.checkAndReplace(text, britishOnly).translated) {
         text = this.checkAndReplace(text, britishOnly).text;
         translated = true;
-      }
-
+    }  
       if (this.checkAndReplace(text, britishSpellingToAmerican).translated) {
         text = this.checkAndReplace(text, britishSpellingToAmerican).text;
         translated = true;
       }
       if (
         this.checkAndReplace(text, britishToAmericanTitles).translated
-      ) {
-        text = this.checkAndReplace(text, britishToAmericanTitles).text;
+        ) {
+            text = this.checkAndReplace(text, britishToAmericanTitles).text;
         translated = true;
-      }
-      if (this.timeFormat(text, 'ae').translated) {
+    }
+    if (this.timeFormat(text, 'ae').translated) {
         text = this.timeFormat(text, 'ae').text
         translated = true;
-      }
     }
-
+}
     return translated ? text : "Everything looks good to me!";
   }
 
@@ -69,12 +67,10 @@ class Translator {
     let highlightArr = [], start, end
     arr = arr.map((x, i) => {
         if(x === format && i !== 0 && i !== text.length-1 && !isNaN(+ text[i - 1]) && !isNaN(+ text[i + 1])) {
-          start = !isNaN(+ text[i - 2]) ? -1 : 0;
-          end  = !isNaN(+ text[i + 2]) ? 1 : 0;
+          start = text[i - 2].trim() && !isNaN(+ text[i - 2]) ? -1 : 0;
+          end  = text[i + 2].trim() && !isNaN(+ text[i + 2]) ? 1 : 0;
           highlightArr.push({
-            i: i,
-            start,
-            end
+            i,start,end
           })
           translated = true
           return to == 'be' ? '.' : ':' 
@@ -123,7 +119,7 @@ class Translator {
             key.length,
             highlightedText
           )
-        text = text.join("")
+        text = text.join("");
         translated = true;
       }
     }
