@@ -107,7 +107,15 @@ test('Tea time is usually around 4 or 4.30', done => {
     done()
 })
 // Highlight translation in Mangoes are my favorite fruit.
+test('Highlight translation in Mangoes are my favorite fruit', done => {
+    assert.equal(new Translator().trans("Mangoes are my favorite fruit", toB), `Mangoes are my <span class="highlight">favourite</span> fruit`)
+    done()
+})
 // Highlight translation in I ate yogurt for breakfast.
+test('Highlight translation in I ate yogurt for breakfast.', done => {
+    assert.equal(new Translator().trans("I ate yogurt for breakfast", toB), `I ate <span class="highlight">yoghurt</span> for breakfast`)
+    done()
+})
 // Highlight translation in We watched the footie match for a while.
 // Highlight translation in Paracetamol takes up to an hour to work.
 
