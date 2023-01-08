@@ -3,7 +3,7 @@ function sym(args) {
       let end = arguments[0].sort((a,b)=>a-b)
       return end
     }
-    let arrToCheck = [...arguments[0], ...arguments[1]];
+    let arrToCheck = [...deleteDuplication(arguments[0]), ...deleteDuplication(arguments[1])];
     let restArgs=Object.values(arguments);
     restArgs.shift()
     restArgs.shift()
@@ -15,6 +15,13 @@ function sym(args) {
        return acc
     },[]);
     return sym(result, ...restArgs);
+
+    function deleteDuplication(arr) {
+      return arr.reduce((acc,el)=>{
+        if(acc.includes(el)) return acc
+        else return [...acc, el]
+      }, [])
+    }
   }
   
   sym([1, 2, 3], [5, 2, 1, 4]);
