@@ -16,3 +16,15 @@ x = list()
 print(type(x))
 print(dir(x))
 print(x)
+x.append('book')
+print(x)
+x.append('cookie')
+print(x)
+x.append(99)
+print(x)
+
+some = [1, 9, 21, 10, 16]
+print(9 in some)
+print(15 in some)
+print(2 not in some)
+
