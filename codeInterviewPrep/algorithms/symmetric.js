@@ -57,4 +57,18 @@ function sym2(args) {
 
 }
 
-console.log(sym2([1, 2, 5], [2, 3, 5], [3, 4, 5]))
+// console.log(sym2console.log([1, 2, 5], [2, 3, 5], [3, 4, 5]))
+
+
+// function sym3(args) {
+//     if(arguments.length == 1) {
+//         return []
+//     } else {
+//         const arr = Object.values(arguments)
+//         arr.shift()
+//         console.log(...arr)
+//         return [...sym3(`${arr.map(a=>a)}`)]
+//     }
+// }
+
+// console.log(sym3([1, 2, 5], [2, 3, 5], [1, 2, 5], [2, 3, 5]))
