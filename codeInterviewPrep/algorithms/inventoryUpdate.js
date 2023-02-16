@@ -38,6 +38,29 @@ function updateInventory(arr1, arr2) {
     }
 }
 
+function updateInventory2(arr1, arr2) {
+    return [...arr1, ...arr2].reduce((acc, el) => {
+        let index
+        if(acc.filter((ele, i) => {
+            if(ele[1] == el[1]) {
+                index = i
+                return true
+            } 
+            return false
+        }).length > 0) {
+            acc[index][0] += el[0] 
+        } else {
+            acc.push(el)
+        }
+        return acc
+    }, []).sort((a,b)=>{
+                if(a[1][0] < b[1][0]) return -1
+                if(a[1][0] > b[1][0]) return 1
+                return 0
+            })
+}
+
+
 // Example inventory lists
 var curInv = [
     [21, "Bowling Ball"],
@@ -52,5 +75,4 @@ var newInv = [
     [67, "Bowling Ball"],
     [7, "Toothpaste"]
 ];
-
-updateInventory(curInv, newInv);
+console.log(updateInventory2(curInv, newInv));
