@@ -6,19 +6,33 @@ function permAlone(str) {
 
     for(let i = 0; i < len; i++) {
         // take char out of the str
-      
-        for (let j = i+1; j < len; j++) {
-            // insert the char to position j
-
-            const before = str.slice(0, j)
-            const char = str[j]
-            const after = str.slice(j+1)    
-            newStr = before
+        const curChar = str[i]
+             
+        for (let j = 0; j < len.length; j++) {
+            if(i != j ){
+                
+            }
+            
+         
         }
         
 
     }
+
+
+    
     return str;
   }
   
-  permAlone('aab');
+//   permAlone('aab');
+
+  function swap(str, fr, to){
+    if (fr < to) {
+        return str.slice(0, fr) + str[to] + str.slice(fr + 1, to) + str[fr] + str.slice(to + 1)
+    } else {
+        return str.slice(0, to) + str[fr] + str.slice(to + 1, fr) + str[to] + str.slice(fr + 1)
+    }
+  }
+
+  console.log(swap('1234', 1, 3));
+  
