@@ -10,17 +10,10 @@ function permAlone(str) {
              
         for (let j = 0; j < len.length; j++) {
             if(i != j ){
-                
-            }
-            
-         
-        }
-        
-
-    }
-
-
-    
+                // switch i and j 
+            }      
+        }     
+    } 
     return str;
   }
   
