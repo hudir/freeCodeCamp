@@ -29,3 +29,7 @@ function permAlone(str) {
 
   console.log(swap('1234', 1, 3));
   
+
+  function tryAgain(){
+
+  }
