@@ -50,7 +50,6 @@ function permAlone(str) {
     return strArr.filter(el => el.reduce((acc, char, index, arr)=> {
         if (char == arr[index+1]) {
             acc = false
-            return acc
         }
         return acc
     }, true)).length
