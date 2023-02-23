@@ -1,13 +1,11 @@
 function quickSort(array) {
-    if(array.length == 0) return array
+    if(array.length === 0) return []
 
-    pivod = array.shift()
-    left = array.filter(x => x < pivod)
-    right = array.filter(x => x >= pivod)
-    console.log(left,pivod, right)
+    const pivod = array.shift()
+    const left = array.filter(x => x < pivod)
+    const right = array.filter(x => x >= pivod)
 
-    return quickSort(left).concat(pivod).concat(quickSort(right)) 
-
+    return [...quickSort(left) , pivod , ...quickSort(right)]
   }
 
-  console.log(quickSort([2, 1, 3, 0]));
+  console.log(quickSort([2, 1, 3, 0,4]))
