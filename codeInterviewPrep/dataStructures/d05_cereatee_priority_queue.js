@@ -6,17 +6,19 @@ function PriorityQueue () {
 
     this.enqueue = function(ele) {
         if (this.collection.length === 0 ) this.collection = [ele]
-        else if(this.collection[this.collection.length-1][1] < ele[1]) this.collection = [...this.collection, ele]
+        else if(this.collection[this.collection.length-1][1] <= ele[1]) this.collection = [...this.collection, ele]
+        else if (this.collection[0][1] > ele[1]) this.collection = [ele, ...this.collection
+        ]
         else {
-            for (let i = this.collection.length -1; i > -1 ; i--){
-                if (this.collection[i][1] < ele[1] || i === 0) {
+            for (let i = this.collection.length -1; i > 0 ; i--){
+                if (this.collection[i - 1][1] <= ele[1] || i === 1) {
                     this.collection = [...this.collection.slice(0,i), ele, ...this.collection.slice(i)]
                     break
                 }
-                if(this.collection[i][1] === ele[1] ) {
-                    this.collection = [...this.collection.slice(0,i+1), ele, ...this.collection.slice(i+1)]
-                    break
-                }
+                // if(this.collection[i][1] === ele[1] ) {
+                //     this.collection = [...this.collection.slice(0,i+1), ele, ...this.collection.slice(i+1)]
+                //     break
+                // }
             }
         }
     }
