@@ -8,3 +8,19 @@
 # Enter a number: done
 # Maximum: 9.0
 # Minimum: 2.0
+
+
+userInput = input('Enter a number: ')
+list = list()
+while userInput != 'done':
+    userInput = input('Enter a number: ')
+    
+    try:
+        num = float(userInput)
+        list.append(num)
+    except:
+        print('Enter a number pleas')
+
+
+print('The maximum number is', max(list))
+print('The minimum number is', min(list))
