@@ -7,3 +7,12 @@
 # 'david.horwitz@uct.ac.za': 4, 'wagnermr@iupui.edu': 1,
 # 'zqian@umich.edu': 4, 'stephen.marquard@uct.ac.za': 2,
 # 'ray@media.berkeley.edu': 1}
+
+
+input = open('exercise/ex09/mbox-short.txt')
+obj = dict()
+for line in input:
+    if line.startswith('From '):
+        address = line.split()[1]
+        obj[address] = obj.get(address, 0) + 1
+print(obj)
