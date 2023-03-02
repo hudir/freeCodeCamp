@@ -12,3 +12,13 @@
 # zqian@umich.edu 195
 
 input = open('exercise/ex09/mbox-short.txt')
+
+dict = dict()
+
+for line in input:
+    if line.startswith("From"):
+        ads = line.split()[1]
+        dict[ads] = dict.get(ads, 0) + 1
+
+most = sorted( [ (v,k) for k,v in dict.items()], reverse=True)[0]
+print(most[1], most[0])
