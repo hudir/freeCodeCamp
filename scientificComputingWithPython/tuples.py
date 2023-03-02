@@ -33,3 +33,27 @@ print((0, 1, 2) < (5, 1, 2)) # True
 print((0, 1, 20000000) < (0, 3, 2)) # True
 print(('Jones', 'Sally') < ('Jones', 'Sam')) # True
 print(('Jones', 'Sally') > ('Adams', 'Sam')) # True
+
+d = {
+    'a':10,
+    'c':22,
+    'b':1
+}
+x = sorted(d.items())
+print(x)
+
+for k,v in sorted(d.items()):
+    print(k,v)
+
+# a list of values, where the values is first and key is second
+tmp = list()
+
+for k,v in d.items():
+    tmp.append((v, k))
+
+
+print(sorted(tmp, reverse=True))
+
+# list comperhantion
+
+print(sorted( [ (v,k) for k,v in d.items() ], reverse=True))
