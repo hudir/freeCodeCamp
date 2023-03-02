@@ -36,3 +36,10 @@ print(y)
 
 y = re.findall('^From (\S+@\S+)', x) # ['stephen.marquard@uct.ac.za']
 print(y)
+
+
+s = 'A message from csev@umich.edu to cwen@iupui.edu about meeting @2PM'
+lst = re.findall('@(\S+)', s)
+lst = re.findall('^From .*@([^ ]*)', x)
+
+print(lst)
