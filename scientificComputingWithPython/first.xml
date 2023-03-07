@@ -1,3 +1,17 @@
+<!-- # XML - help infomation systems share structured data
+# Standard Generalized Markup Language(SGML)
+# designed to be relatively human-legible
+
+
+# Tags
+
+# Attributes
+
+# Serialize / De-Serialize
+
+
+-->
+
 <people>
     <person>
         <name>Hudir</name>
@@ -16,3 +30,6 @@
     <phone type="intl">+ 49 1234567</phone>
     <email hide="yes"/>
 </person>
+
+
+<!-- # XML Schema  -->
