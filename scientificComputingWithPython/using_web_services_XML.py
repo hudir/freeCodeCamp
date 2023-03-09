@@ -38,5 +38,6 @@ data2 = '''<data2>
 tree2 = ET.fromstring(data2)
 lst = tree2.findall('people/person')
 for item in lst:
+    print(item)
     print('Phone', item.find('phone').text)
     print('Attr', item.find('email').get('hide'))
