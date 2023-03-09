@@ -9,3 +9,4 @@ data = '''{
 
 info = json.loads(data)
 print('Name:', info["name"])
+print(info["phone"]["number"])
