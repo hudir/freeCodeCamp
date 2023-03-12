@@ -56,5 +56,7 @@ for el in fhand:
    role_col = cur.fetchone()
    if role_col is None:
        cur.execute('INSERT INTO Member(user_id, course_id, role) VALUES (?, ?, ?)', (user_id, course_id, role))
+   else:
+       cur.execute('UPDATE Member SET role = ? WHERE user_id = ? AND course_id = ?', (role , user_id, course_id))
 
 conn.commit()
