@@ -60,3 +60,4 @@ for el in fhand:
        cur.execute('UPDATE Member SET role = ? WHERE user_id = ? AND course_id = ?', (role , user_id, course_id))
 
 conn.commit()
+print(fname, 'is saving to db')
