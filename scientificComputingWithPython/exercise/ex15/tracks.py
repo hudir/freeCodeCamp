@@ -20,9 +20,9 @@ DROP TABLE IF EXISTS Album;
 DROP TABLE IF EXISTS Artist;
 DROP TABLE IF EXISTS Track;
 
-CREATE TABLE Artist(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TEXT);
-CREATE TABLE Album(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, title TEXT, artist_id INTEGER);
-CREATE TABLE Track(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, title TEXT, album_id INTEGER, len INTERGER, rating INTEGER, count INTEGER);
+CREATE TABLE Artist(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, name TEXT UNIQUE);
+CREATE TABLE Album(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, title TEXT UNIQUE, artist_id INTEGER);
+CREATE TABLE Track(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, title TEXT UNIQUE, album_id INTEGER, len INTERGER, rating INTEGER, count INTEGER);
 ''')
 
 # read xml and  value
@@ -38,11 +38,26 @@ for entry in all:
             lastkey = ele.text
         else:
             obj[lastkey] = ele.text
+    
+    if not 'Track ID' in obj or not 'Album' in obj or not 'Rating' in obj: continue
     print(obj)
-    if not 'Artist' in obj: continue
 
     # insert values to db
+    cur.execute('INSERT OR IGNORE INTO Artist(name) VALUES (?)', (obj["Artist"], ))
+    cur.execute('SELECT id FROM Artist WHERE name = ?', (obj["Artist"] , ))
+    artist_id = cur.fetchone()[0]
+
+    cur.execute('INSERT OR IGNORE INTO Album(title, artist_id ) VALUES (?, ?)', (obj['Album'], artist_id))
+    cur.execute('SELECT id FROM Album WHERE title = ?', (obj['Album'] ,))
+    album_id = cur.fetchone()[0]
+
+    cur.execute('INSERT OR REPLACE INTO Track(title, album_id, len, rating, count) VALUES (?, ?, ?, ?, ?)', (obj['Name'], album_id, obj['Total Time'], obj['Rating'], obj['Play Count']))
     
+    conn.commit()
+
+print('all done')
+
+
 
 
     
