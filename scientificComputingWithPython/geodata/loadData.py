@@ -29,15 +29,18 @@ for name in where:
         print('address found in db:', address)
         continue
 
-
-
     params = dict()
     params['address'] = address
 
     url = serviceurl + urllib.parse.urlencode(params)
+    print('Retrieving data from: ', url)
 
     data = urllib.request.urlopen(url).read().decode()
-    obj = json.loads(data)
+    try:
+       obj = json.loads(data)
+    except:
+        print('data damged: ', data)
+        continue
 
     if not 'error' in obj and 'status' in obj and obj['status'] == 'OK': 
         print(obj)
@@ -45,6 +48,10 @@ for name in where:
         cur.execute('INSERT INTO Locations(address, geodata) VALUES (?, ?)', (memoryview(address.encode()), memoryview(data.encode())))
 
         conn.commit()
+    else:
+        print('Something wrong')
+        print(data)
+        break
 
-
+print('all done')
  
