@@ -25,6 +25,7 @@ cur.execute('CREATE TABLE IF NOT EXISTS Webs (id INTEGER PRIMARY KEY, url TEXT U
 
 cur.execute('SELECT * FROM Webs')
 allWebs = cur.fetchall()
+obj=dict()
 # print(allWebs)
 if len(allWebs) < 1:
     starturl = input('Enter web url or enter: ')
@@ -35,9 +36,9 @@ if len(allWebs) < 1:
     if starturl.endswith('/') or starturl.endswith('.html') :
         pos = starturl.rfind('/')
         web = starturl[:pos]
+    obj['0'] = starturl
 else:
-    try:
-        obj=dict()
+    try:   
         for row in allWebs:
             obj[row[0]] = row[1]
             print(row[0], row[1])
@@ -56,7 +57,7 @@ else:
     
 if len(web) > 1 :
         cur.execute('INSERT OR IGNORE INTO Webs (url) VALUES (?)', (web,))
-        cur.execute('INSERT OR IGNORE INTO Pages (url, html, new_rank, error) VALUES (?, Null, 1.0, Null)', (starturl, ))
+        cur.execute('INSERT OR IGNORE INTO Pages (url, html, new_rank, error) VALUES (?, NULL, 1.0, NULL)', (starturl, ))
         conn.commit()
 
 count = 0
@@ -65,9 +66,9 @@ while True:
           sval = input('How many pages: ')
           if len(sval) < 1: break
           count = int(sval)
-    count=count -1
+    count = count -1
 
-    cur.execute('SELECT id, url FROM Pages WHERE html is Null AND error is NULL ORDER BY RANDOM() LIMIT 1')
+    cur.execute('SELECT id, url FROM Pages WHERE html is NULL AND error is NULL ORDER BY RANDOM() LIMIT 1')
     
     try:
           data = cur.fetchone()
@@ -99,19 +100,74 @@ while True:
         
         print('(' + str(len(html)) + ')', end=' ')
 
-        print(html)
         soup = BeautifulSoup(html, "html.parser")
      
              #   update error
     except KeyboardInterrupt:
          print('')
          print('Stop Program by User')
+         break
     except:
          print('Unable to retrive or parse page')
          updatePageError(conn,cur,url)
          continue
     
+    cur.execute('UPDATE Pages SET html = ? WHERE url =?', (memoryview(html), url))
+    conn.commit()
+    
     # till here all good 
+    tags = soup('a')
+
+
+
+    for tag in tags:
+         href = tag.get('href', None)
+         if href is None: continue
+         
+         up = urllib.parse.urlparse(href)
+         if len(up.scheme) < 1:
+              href = urllib.parse.urljoin(url, href)
+         ipos = href.find('#')
+         if ipos > 1 : href = href[:ipos]
+         if len(href) < 1 or href.endswith('.png') or href.endswith('.jpg') or href.endswith('.gif') :
+            continue
+        #  make sure new link is inside one of our website
+         found =False
+        
+         print(obj)
+         
+         for web in obj.values():
+              print(web)
+              if href.startswith(web): 
+                   found = True
+                   break
+         if not found : continue
+         print(1)
+
+        #  insert new link to Pages
+         cur.execute('INSERT OR IGNORE INTO Pages(url, html, new_rank, error) VALUES (?,NULL,1,NULL)', (href,))
+         conn.commit()
+
+         cur.execute('SELECT id FROM Pages WHERE url = ?', ( href ,))
+         try:
+              newURL = cur.fetchone()
+              to_id = newURL[0]
+         except:
+              print('Could not retrieve id')
+              continue
+              
+        #  insert new link to Links
+         cur.execute('INSERT OR IGNORE INTO Links (from_id, to_id) VALUES (?, ?)', (from_id, to_id))
+
+         print('New Link', href)
+
+
+cur.close()
+
+
+         
+
+
 
 
 
