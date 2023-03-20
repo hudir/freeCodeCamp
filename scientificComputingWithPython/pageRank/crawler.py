@@ -1,7 +1,12 @@
 import urllib.request, urllib.parse, urllib.error
 import sqlite3
 from bs4 import BeautifulSoup 
+import ssl
 
+# Ignore SSL certificate errors
+ctx = ssl.create_default_context()
+ctx.check_hostname = False
+ctx.verify_mode = ssl.CERT_NONE
 
 conn = sqlite3.connect('./pageRank/spider.sqlite')
 cur = conn.cursor()
@@ -42,13 +47,19 @@ else:
         for row in allWebs:
             obj[row[0]] = row[1]
             print(row[0], row[1])
+        print('Enter new to give new url')
         web_id = input('Which website do you want to take? enter the id: ')
-        web_id = int(web_id)
-        while web_id not in obj:
-             print(web_id, 'can not be choosen\n', obj)
-             web_id = input('please take another one: ')
-        web =  obj[web_id]
-        starturl = obj[web_id]
+        if web_id == 'new':
+             web_id = input('Enter new url: ')
+             web =  web_id
+             starturl = web_id
+        else:
+            web_id = int(web_id)
+            while web_id not in obj:
+                 print(web_id, 'can not be choosen\n', obj)
+                 web_id = input('please take another one: ')
+            web =  obj[web_id]
+            starturl = obj[web_id]
              
     except:
          print('wow sth wrong')
@@ -74,10 +85,12 @@ while True:
           data = cur.fetchone()
           from_id = data[0]
           url = data[1]
+          print(url)
     except:
         #   update error
         updatePageError(conn,cur,url)
         print(url, 'can not retrive')
+        count = 0
         continue
 
     
@@ -85,7 +98,7 @@ while True:
 
     # call the url
     try: 
-        doc = urllib.request.urlopen(url)
+        doc = urllib.request.urlopen(url, context=ctx)
         html = doc.read()
         if doc.getcode() != 200:
             print('Page Error', doc.getcode())
@@ -134,15 +147,15 @@ while True:
         #  make sure new link is inside one of our website
          found =False
         
-         print(obj)
+   
          
          for web in obj.values():
-              print(web)
+              
               if href.startswith(web): 
                    found = True
                    break
          if not found : continue
-         print(1)
+
 
         #  insert new link to Pages
          cur.execute('INSERT OR IGNORE INTO Pages(url, html, new_rank, error) VALUES (?,NULL,1,NULL)', (href,))
