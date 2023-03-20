@@ -86,6 +86,33 @@ for i in range(many):
     for node in next_ranks:
         next_ranks[node] = next_ranks[node] + evap
     # print(next_ranks) # {1: 0.4916666666666665, 2: 3.125, 4: 0.9916666666666665, 3: 1.1249999999999998, 13: 0.2916666666666664, 12: 0.4916666666666665, 10: 0.9916666666666665, 9: 0.4916666666666665}
+    # calc the new total
+    newtot = 0
+    for (node, next_rank) in list(next_ranks.items()):
+        newtot = newtot + next_rank
+
+    # calc the per-page average change from old rank to new rank as indication of cpnvergence of the algorithm
+    totdiff = 0
+    for (node, old_rank) in list(prev_ranks.items()):
+        new_rank = next_ranks[node]
+        diff = abs(old_rank - new_rank)
+        totdiff = totdiff + diff
+    
+    avediff = totdiff / len(prev_ranks)
+    print(i + 1, avediff)
+    
+    # rotate
+    prev_ranks = next_ranks
+
+# put the final ranks back into the database
+print(list(next_ranks.items())[:5])
+cur.execute('UPDATE Pages SET old_rank = new_rank')
+for (id , new_rank) in list(next_ranks.items()):
+    cur.execute('UPDATE Pages SET new_rank = ? WHERE id = ?', (new_rank, id))
+conn.commit()
+cur.close()
+
+    
 
 
 
