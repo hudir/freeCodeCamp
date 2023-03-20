@@ -70,7 +70,22 @@ for i in range(many):
         # 12 1.0 0.5 [2, 3]
         # 10 1.0 0.5 [2, 4]
         # 9 1.0 1.0 [2]
+        for id in give_ids:
+            next_ranks[id] = next_ranks[id] + amount
+        
+    # print(next_ranks) {1: 0.3666666666666667, 2: 3.0, 4: 0.8666666666666667, 3: 1.0, 13: 0.16666666666666666, 12: 0.3666666666666667, 10: 0.8666666666666667, 9: 0.3666666666666667}
+    # calc new total
+    newtot = 0
+    for (node, next_rank) in list(next_ranks.items()):
+        newtot = newtot + next_rank
+    
+    evap = (total - newtot) / len(next_ranks)
 
+    # print(evap) # 0.12499999999999978
+
+    for node in next_ranks:
+        next_ranks[node] = next_ranks[node] + evap
+    # print(next_ranks) # {1: 0.4916666666666665, 2: 3.125, 4: 0.9916666666666665, 3: 1.1249999999999998, 13: 0.2916666666666664, 12: 0.4916666666666665, 10: 0.9916666666666665, 9: 0.4916666666666665}
 
 
 
