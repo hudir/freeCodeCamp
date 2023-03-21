@@ -40,7 +40,7 @@ for row in nodes:
     map[row[3]] = count
     ranks[row[3]] = rank
     count = count + 1
-fhand.write( '],\n   "Links": [    ')
+fhand.write( '],\n   "links": [    ')
 
 cur.execute('SELECT DISTINCT from_id, to_id FROM Links')
 count = 0
