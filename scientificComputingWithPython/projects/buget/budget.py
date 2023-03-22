@@ -63,22 +63,30 @@ class Category:
      return line
      
 
-# food = Category('food')
-# food.deposit(100, 'sell drinks')
-# food.withdraw(2, 'bonbon')
-# food.withdraw(20, 'bonbon')
+food = Category('food')
+food.deposit(100, 'sell drinks')
+food.withdraw(2, 'bonbon')
+food.withdraw(20, 'bonbon')
 
-# auto = Category('Auto')
-# auto.deposit(100, 'sell drinks')
-# auto.withdraw(2, 'bonbon')
-# auto.withdraw(20, 'bonbon')
+auto = Category('Auto')
+auto.deposit(100, 'sell drinks')
+auto.withdraw(2, 'bonbon')
+auto.withdraw(20, 'bonbon')
 
-# entertainment = Category('entertainment')
-# entertainment.deposit(500, "sell pc")
-# entertainment.transfer(100, food)
+entertainment = Category('entertainment')
+entertainment.deposit(500, "sell pc")
+entertainment.transfer(100, food)
 
-# food.get_balance()
-# entertainment.get_balance()
+food.get_balance()
+entertainment.get_balance()
+
+print(food)
+# *************food*************
+# sell drinks             100.00
+# bonbon                   -2.00
+# bonbon                  -20.00
+# Transfer from entertain 100.00
+# Total: 178.00
 
 
 def create_spend_chart(categories):
@@ -129,3 +137,30 @@ def create_spend_chart(categories):
 # create_spend_chart([food, entertainment])     
 
 # print(create_spend_chart([food, entertainment, auto]))
+
+# Percentage spent by category
+# 100|          
+#  90|          
+#  80|          
+#  70|    o     
+#  60|    o     
+#  50|    o     
+#  40|    o     
+#  30|    o     
+#  20|    o  o  
+#  10|    o  o  
+#   0| o  o  o  
+#     ----------
+#      B  F  E  
+#      u  o  n  
+#      s  o  t  
+#      i  d  e  
+#      n     r  
+#      e     t  
+#      s     a  
+#      s     i  
+#            n  
+#            m  
+#            e  
+#            n  
+#            t
