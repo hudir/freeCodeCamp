@@ -45,7 +45,6 @@ class Category:
      left = '*' * math.floor((30 - namelen) / 2)
      line = left + self.title + '*' * (30 - len(left) - namelen) + '\n'
      for row in self.ledger:
-        print(row)
         amout= row["amount"]
         des = row["description"]
         if len(des) > 23: des = des[:23]
@@ -63,23 +62,71 @@ class Category:
      elif len(decima) > 2 : funds = funds.split('.')[0] + funds.split('.')[1][:2]
 
      line = line + "Total: " + funds
-     print(line)
+     return line
      
-    
-
-
-#   def create_spend_chart(categories):
-
 
 food = Category('food')
 food.deposit(100, 'sell drinks')
 food.withdraw(2, 'bonbon')
+food.withdraw(20, 'bonbon')
+
+auto = Category('Auto')
+auto.deposit(100, 'sell drinks')
+auto.withdraw(2, 'bonbon')
+auto.withdraw(20, 'bonbon')
 
 entertainment = Category('entertainment')
 entertainment.deposit(500, "sell pc")
 entertainment.transfer(100, food)
 
-food.get_balance()
-entertainment.get_balance()
+# food.get_balance()
+# entertainment.get_balance()
 
 
+def create_spend_chart(categories):
+    record = dict()
+    totspent = 0
+    maxlentitle = None
+    for category in categories:
+       print(category)
+       if (maxlentitle is None) or maxlentitle < len(category.title): 
+          maxlentitle = len(category.title)
+       record[category.title] = 0
+       for ledger in category.ledger:
+           if float(ledger["amount"]) < 0:
+              record[category.title] = record[category.title] + abs(ledger["amount"])
+              totspent = totspent + abs(ledger["amount"])
+
+    for category in list(record.items()):
+       print(category)
+       record[category[0]] = (record[category[0]] / totspent * 100)
+
+    line = "Percentage spent by category\n"
+    count = 100
+    while count > -1:
+       num = str(count)
+       while len(num) < 3 : num = ' ' + num
+       line = line + num + '|'
+       for category in list(record.items()):
+          if category[1] > count:
+             line = line + ' ' + 'o'
+       line = line + '\n'
+       count = count -10
+    
+    line = line + ' ' * 4 + '-'* (len(record) * 2 + 2) 
+
+    for index in range(maxlentitle):
+       line = line + "\n"
+       line = line + ' ' * 4
+       for category in list(record.items()):
+          if len(category[0]) > index:
+             line = line + ' ' + category[0][index]
+          else : line = line + '  '
+       
+    # print(line)
+    return line
+
+
+create_spend_chart([food, entertainment])     
+
+print(create_spend_chart([food, entertainment, auto]))
