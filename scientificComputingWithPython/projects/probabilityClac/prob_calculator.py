@@ -35,6 +35,7 @@ def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
     count = 0
     for i in range(num_experiments):
         get = hat.draw(num_balls_drawn)
+        print(get)
         want = copy.deepcopy(expected_balls)
         for ball in get:
             if ball in want: want[ball] = want[ball] -1
@@ -45,7 +46,9 @@ def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
                 getall = False
                 break
         if getall : count = count + 1
-    print('result', count / num_experiments)
+
+        # print(get, want)
+    print('count', count)
     return count / num_experiments
             
 
@@ -59,3 +62,7 @@ probability = experiment(hat=hat,
                   num_balls_drawn=4,
                   num_experiments=1000)
 print(probability)
+
+# hat1 = Hat(yellow=5,red=1,green=3,blue=9,test=1)
+# probability1 = experiment(hat=hat1, expected_balls={"yellow":2,"blue":3,"test":1}, num_balls_drawn=20, num_experiments=100)
+# print(probability1)
