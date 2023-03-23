@@ -34,7 +34,7 @@ obj=dict()
 # print(allWebs)
 if len(allWebs) < 1:
     starturl = input('Enter web url or enter: ')
-    if len(starturl) < 1 : starturl = 'http://www.dr-chuck.com/'
+    if len(starturl) < 1 : starturl = 'https://www.dr-chuck.com'
     starturl = starturl.strip()
     if starturl[len(starturl)-1] == '/': starturl = starturl[:-1]
     web = starturl
