@@ -23,12 +23,16 @@ class Hat:
         #     draw.append(ball)
         #     balls = balls[:index] + balls[index+1:]
         draw = list()
+        # draw a ball from a hat have lower probability than draw the first ball of that color from a hat
         for i in range(howmany):
-            index = math.floor(random.random() * len(self.contents))
-            print('random', index, end=" ")
-            ball = self.contents[index]
+            # index = math.floor(random.random() * len(self.contents))
+            ball = random.choice((self.contents))
+            print(ball, self.contents)
+            # print('random', index, end=" ")
+            # ball = self.contents[index]
             draw.append(ball)
-            self.contents = self.contents[:index] + self.contents[index+1:]
+            self.contents.pop(self.contents.index(ball))
+            # self.contents = self.contents[:index] + self.contents[index+1:]
         # print(draw, balls)
         getdict = dict()
         for ball in self.contents:
@@ -71,12 +75,12 @@ def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
     return count / num_experiments
             
 
-# hat = Hat(blue=3,red=2,green=6)
-# probability = experiment(hat=hat,
-#                   expected_balls={"blue":2, "green":1},
-#                   num_balls_drawn=4,
-#                   num_experiments=1000)
-# print(probability)
+hat = Hat(blue=3,red=2,green=6)
+probability = experiment(hat=hat,
+                  expected_balls={"blue":2, "green":1},
+                  num_balls_drawn=4,
+                  num_experiments=1000)
+print(probability)
 
 # hat1 = Hat(yellow=5,red=1,green=3,blue=9,test=1)
 # probability1 = experiment(hat=hat1, expected_balls={"yellow":2,"blue":3,"test":1}, num_balls_drawn=20, num_experiments=100)
