@@ -178,3 +178,54 @@ cur_data.execute("SELECT headers, body, sent_at FROM Messages ORDER BY sent_at")
 senders = dict()
 subjects = dict()
 guids = dict()
+
+count = 0
+
+for message_row in cur_data:
+    hdr = message_row[0]
+    parsed = parseheader(hdr, allsenders)
+    if parsed is None : continue
+    (guid, sender, subject, sent_at) = parsed
+
+    # apply the sender mapping 
+    sender = mapping.get(sender, sender)
+    
+    count = count + 1
+    if count % 250 == 1 : print(count, sent_at, sender)
+
+    if "gmane.org" in sender:
+        print("Error in sender ===", sender)
+
+    sender_id = senders.get(sender, None)
+    subject_id = subjects.get(subject, None)
+    guid_id = guids.get(guid, None)
+
+    if sender_id is None :
+        cur.execute("INSERT OR IGNORE INTO Senders (sender) VALUES ( ? )", (sender,))
+        conn.commit()
+        cur.execute("SELECT id FROM Senders WHERE sender=? LIMIT 1", (sender,))
+        try:
+            row = cur.fetchone()
+            sender_id = row[0]
+            senders[sender] = sender_id
+        except:
+            print("Could not retrieve sender id", sender)
+            break
+
+    if subject_id is None :
+        cur.execute("INSERT OR IGNORE INTO Subjects (subject) VALUES ( ? )", (subject,))
+        conn.commit()
+        cur.execute("SELECT id FROM Subjects WHERE subject=? LIMIT 1", (subject,))
+        try:
+            row = cur.fetchone()
+            sender_id = row[0]
+            subjects[subject] = subject
+        except:
+            print("Could not retrieve subject id", subject)
+            break
+    
+    cur.execute("INSERT OR IGNORE INTO Messages")
+
+        
+
+
