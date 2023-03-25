@@ -155,7 +155,7 @@ cur_map.execute("SELECT old,new FROM Mapping")
 for message_row in cur_map:
     old = fixsender(message_row[0])
     new = fixsender(message_row[1])
-    mapping[old] = mapping[new]
+    mapping[old] = fixsender(new)
 
 conn_map.close()
 
@@ -224,8 +224,16 @@ for message_row in cur_data:
             print("Could not retrieve subject id", subject)
             break
     
-    cur.execute("INSERT OR IGNORE INTO Messages")
+    cur.execute("INSERT OR IGNORE INTO Messages (guid,sender_id, subject_id, sent_at, headers, body) VALUES (?,?,?,?,?,?)", (guid, sender_id, subject_id, sent_at, zlib.compress(message_row[0].encode()), zlib.compress(message_row[1].encode())))
+    conn.commit()
+    cur.execute("SELECT id FROM Messages WHERE guid =? LIMIT 1", (guid,))
+    try:
+        row = cur.fetchone()
+        message_id = row[0]
+        guids[guid] = message_id
+    except:
+        print("Could not retrieve guid id", guid)
+        break
 
-        
-
-
+cur.close()
+cur_data.close()
