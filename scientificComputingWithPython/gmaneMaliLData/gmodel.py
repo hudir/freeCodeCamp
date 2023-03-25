@@ -30,10 +30,10 @@ def fixsender(sender, allsenders = None):
                 break
             if realsender is None :
                 for s in mapping:
-                    if s.startswith(pieces[0])
-                    realsender = sender
-                    sender = mapping[s]
-                    break
+                    if s.startswith(pieces[0]):    
+                        realsender = sender
+                        sender = mapping[s]
+                        break
             if realsender is None : sender = pieces[0]
     
     mpieces = sender.split('@')
@@ -50,7 +50,7 @@ def fixsender(sender, allsenders = None):
 def parsemaildate(md) :
     # See if we have dateutil
     try:
-        pdate = parser.parse(tdate)
+        pdate = parser.parse(md)
         test_at = pdate.isoformat()
         return test_at
     except:
@@ -129,8 +129,52 @@ def parseheader(hdr, allsenders=None):
         return None
     return(guid, sender, subject, sent_at)
 
-
-
-
-conn = sqlite3.connect('./gmaneMaliLData/content.sqlite')
+conn = sqlite3.connect('./gmaneMaliLData/index.sqlite')
 cur = conn.cursor()
+
+cur.execute('DROP TABLE IF EXISTS Messages')
+cur.execute('DROP TABLE IF EXISTS Senders')
+cur.execute('DROP TABLE IF EXISTS Subjects')
+cur.execute('DROP TABLE IF EXISTS Replies')
+
+cur.execute('CREATE TABLE IF NOT EXISTS Messages (id INTEGER PRIMARY KEY, guid TEXT UNIQUE, sent_at INTEGER, sender_id INTERGER, subject_id INTEGER, headers BLOB, body BLOB)')
+cur.execute('CREATE TABLE IF NOT EXISTS Senders (id INTEGER PRIMARY KEY, sender TEXT UNIQUE)')
+cur.execute('CREATE TABLE IF NOT EXISTS Subjects (id INTEGER PRIMARY KEY, subject TEXT UNIQUE)')
+cur.execute('CREATE TABLE IF NOT EXISTS Replies (from_id INTEGER, to_id INTEGER)')
+
+
+conn_map = sqlite3.connect("./gmaneMaliLData/mapping.sqlite")
+cur_map = conn_map.cursor()
+
+cur_map.execute("SELECT old,new FROM DNSMapping")
+for message_row in cur_map:
+    dnsmapping[message_row[0].strip().lower()] = message_row[1].strip().lower()
+
+mapping = dict()
+cur_map.execute("SELECT old,new FROM Mapping")
+for message_row in cur_map:
+    old = fixsender(message_row[0])
+    new = fixsender(message_row[1])
+    mapping[old] = mapping[new]
+
+conn_map.close()
+
+conn_data = sqlite3.connect('file:./gmaneMaliLData/content.sqlite?mode=ro', uri=True)
+cur_data = conn_data.cursor()
+
+allsenders = list()
+cur_data.execute(("SELECT email FROM Messages"))
+for message_row in cur_data:
+    sender = fixsender(message_row[0])
+    if sender is None: continue
+    if 'gmane.org' in sender : continue
+    if sender in allsenders: continue
+    allsenders.append(sender)
+
+print("Loaded allsenders",len(allsenders),"and mapping",len(mapping),"dns mapping",len(dnsmapping))
+
+cur_data.execute("SELECT headers, body, sent_at FROM Messages ORDER BY sent_at")
+
+senders = dict()
+subjects = dict()
+guids = dict()
