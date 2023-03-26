@@ -27,8 +27,8 @@ sendorgs = dict()
 for (message_id, message) in list(messages.items()):
     sender = message[1]
     sendcounts[sender] = sendcounts.get(sender, 0) + 1
-    if sender not in senders: print(111111111, sender)
-    print(senders[sender])
+    # if sender not in senders: print(111111111, sender)
+    # print(senders[sender])
     pieces = senders[sender].split("@")
     if len(pieces) != 2 : continue
     dns = pieces[1]
