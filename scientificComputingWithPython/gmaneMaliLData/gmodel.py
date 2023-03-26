@@ -105,7 +105,6 @@ def parseheader(hdr, allsenders=None):
     # normalize the domin name of Email adressses
     sender = fixsender(sender, allsenders)
 
-    date = None
     y = re.findall('\nDate: .*, (.*)\n', hdr)
     sent_at = None
     if len(y) >= 1 :
@@ -127,7 +126,7 @@ def parseheader(hdr, allsenders=None):
 
     if sender is None or sent_at is None or subject is None or guid is None:
         return None
-    return(guid, sender, subject, sent_at)
+    return (guid, sender, subject, sent_at)
 
 conn = sqlite3.connect('./gmaneMaliLData/index.sqlite')
 cur = conn.cursor()
@@ -218,8 +217,8 @@ for message_row in cur_data:
         cur.execute("SELECT id FROM Subjects WHERE subject=? LIMIT 1", (subject,))
         try:
             row = cur.fetchone()
-            sender_id = row[0]
-            subjects[subject] = subject
+            subject_id = row[0]
+            subjects[subject] = subject_id
         except:
             print("Could not retrieve subject id", subject)
             break
