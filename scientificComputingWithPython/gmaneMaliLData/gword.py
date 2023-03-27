@@ -36,7 +36,7 @@ print(('Range of counts:', highest, lowest))
 bigsize = 80
 smallsize = 20
 
-fhand = open("./gmaneMaliLData//gword.js", 'w')
+fhand = open("./gmaneMaliLData/gword.js", 'w')
 fhand.write("gword = [")
 
 for k in x[:100]:

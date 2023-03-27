@@ -1,6 +1,6 @@
 import sqlite3
 
-howmany = int(input("How many to dump"))
+howmany = int(input("How many to dump "))
 
 conn = sqlite3.connect('./gmaneMaliLData/index.sqlite')
 cur = conn.cursor()
