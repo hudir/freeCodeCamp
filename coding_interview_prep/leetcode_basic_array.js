@@ -111,3 +111,109 @@ var plusOne = function(digits) {
         return [...digits];
     }
  };
+
+//  Move Zeroes
+var moveZeroes = function(nums) {
+    // looping though the array
+    // if nums[i] === 0 we do move
+    // we need a vari to know, how many digits/ indexes we need move
+    if (nums.length < 2) return
+    let move = 0
+    for(let i = 0; i < nums.length-move; i++) {
+        if (nums[i] === 0) {
+            move += 1
+            nums.splice(i, 1)
+            nums.push(0)
+            i--
+        } 
+    }
+    
+};
+
+// Two Sum
+var twoSum = function(nums, target) {
+    let index1 = 0
+    let index2 = 1
+    for(let i = 0; i < nums.length; i++) {
+        let wantIndex = nums.indexOf(target - nums[i])
+        console.log(wantIndex)
+        if (wantIndex != -1 && wantIndex != i) {
+            index1 = i
+            index2 = wantIndex
+            break
+        }
+    }
+    return [index1, index2]
+};
+
+var twoSum = function(nums, target) {
+    let s = {}
+    for(let i = 0; i < nums.length; i++) {
+        let want = target - nums[i]
+        if(s.hasOwnProperty(want)) {
+            return [s[want], i]
+        }
+        s[nums[i]] = i
+    }
+};
+
+
+// Valid Sudoku
+var isValidSudoku = function(board) {
+    // let's get region
+    let r1 = []
+    let r2 = []
+    let r3 = []
+    
+    for(let i=0; i<9;i++){    
+        // let get collogns
+        const collogn = []
+       
+        for(let k = 0; k <9; k++){
+            collogn.push(board[k][i])
+            
+            if(k / 3 < 1) r1.push(board[k][i])
+            else if (k / 3 < 2) r2.push(board[k][i])
+            else r3.push(board[k][i])
+        }
+        
+        // check rows and collogn
+        if (!check(board[i]) || !check(collogn)) return false 
+        
+        // check region
+        if (r1.length === 9){
+            if (!check(r1) || !check(r2) || !check(r3)) return false
+            r1 = []
+            r2 = []
+            r3 = []
+        }
+    }
+    
+    return true
+    
+    // check arr vailidation
+    function check(arr){
+        const stor = {}
+        for(let i = 0; i < arr.length; i++) {
+            if(arr[i] != '.'){
+                if(stor.hasOwnProperty(arr[i])) return false
+                else stor[arr[i]] = true
+            }
+        }
+        return true 
+    }
+    
+};
+
+
+// Rotate Image
+var rotate = function(matrix) {
+    len = matrix.length
+    for(let i = 0 ; i < len ; i++) {
+        matrix[len+i] = []
+         for(let k = len -1 ; k >= 0 ; k--) {
+             matrix[len+i].push(matrix[k][i])
+         }
+    }
+    matrix.splice(0, len)
+};
