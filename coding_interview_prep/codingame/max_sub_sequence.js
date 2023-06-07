@@ -75,48 +75,83 @@ console.log(res.join(' ') === "4904152 4904153 4904154 4904155 4904156 4904157 4
 
 
 
-/**
- * Auto-generated code below aims at helping you parse
- * the standard input according to the problem statement.
- **/
+// /**
+//  * Auto-generated code below aims at helping you parse
+//  * the standard input according to the problem statement.
+//  **/
 
-const N = parseInt(readline());
-var inputs = readline().split(' ');
+// const N = parseInt(readline());
+// var inputs = readline().split(' ');
 
-let min = Math.min(...inputs)
-let max = Math.max(...inputs)
-let eve = Math.floor((max-min) / inputs.length)
-inputs=inputs.map(x=>x-eve)
+// let min = Math.min(...inputs)
+// let max = Math.max(...inputs)
+// let eve = Math.floor((max-min) / inputs.length)
+// inputs=inputs.map(x=>x-eve)
 
-let res = []
-for (let i = 0; i < N; i++) {
+// let res = []
+// for (let i = 0; i < N; i++) {
     
-    for (let k = i + 1; k < N; k++) {
-        let temp = []
-        let inc = 0
-        for (let j = k; j < N; j++) {
-            const l = parseInt(inputs[j]);
-            if (temp.length === 0) {         
-                if (l - inputs[i] > 0) {
-                    inc = l - inputs[i]
-                    temp.push(inputs[i], l)
-                }
-                else break
-            } else if (l - temp[temp.length - 1] === inc) temp.push(l);
-        }
-        // console.error(temp, inc)
-        if (res.length === 0 || res.length < temp.length) res = temp
-        else if (res.length === temp.length) {
-            for (let i = 0; i < temp.length; i++) {
-                if (res[i] < temp[i]) break;
-                else if (temp[i] < res[i]) {
-                    res = temp;
-                    break
-                }
-            }
-        }
-    }
-}
+//     for (let k = i + 1; k < N; k++) {
+//         let temp = []
+//         let inc = 0
+//         for (let j = k; j < N; j++) {
+//             const l = parseInt(inputs[j]);
+//             if (temp.length === 0) {         
+//                 if (l - inputs[i] > 0) {
+//                     inc = l - inputs[i]
+//                     temp.push(inputs[i], l)
+//                 }
+//                 else break
+//             } else if (l - temp[temp.length - 1] === inc) temp.push(l);
+//         }
+//         // console.error(temp, inc)
+//         if (res.length === 0 || res.length < temp.length) res = temp
+//         else if (res.length === temp.length) {
+//             for (let i = 0; i < temp.length; i++) {
+//                 if (res[i] < temp[i]) break;
+//                 else if (temp[i] < res[i]) {
+//                     res = temp;
+//                     break
+//                 }
+//             }
+//         }
+//     }
+// }
 
-res=res.map(x=>x+eve)
-console.log(res.join(' '));
+// res=res.map(x=>x+eve)
+// console.log(res.join(' '));
+
+
+
+
+
+Maximum sub-sequence II
+
+This Puzzle is based on Maximum sub-sequence by code_of_the_dead.
+
+Given a list of N random integers Ik, you must return the maximum-length incrementing sequence contained in this list (for each Ik in the sequence, Ik=I(k-1)+x).x is an integer, and x > 0 . The incrementing sequence must be ordered, but need not be adjacent to the given sequence.
+
+In case of multiple maximum-length sequences, return the one with the lowest starting integer.
+
+
+Line 1: a single integer N.
+Line 2: a list of N integers Ik separated by space.
+
+
+
+Line 1: a list of integers separated by space.
+
+
+-10^7 <= Ik <= 10^7
+0 < N < 1500
+
+
+5
+0 -1 1 2 4               
+
+0 1 2
+
+19
+8 12 999 1000 0 1001 1 2 49 9 8 3 1002 4 -456 5 1003 1004 1005
+
+999 1000 1001 1002 1003 1004 1005
