@@ -75,51 +75,51 @@ console.log(res.join(' ') === "4904152 4904153 4904154 4904155 4904156 4904157 4
 
 
 
-// /**
-//  * Auto-generated code below aims at helping you parse
-//  * the standard input according to the problem statement.
-//  **/
+/**
+ * Auto-generated code below aims at helping you parse
+ * the standard input according to the problem statement.
+ **/
 
-// const N = parseInt(readline());
-// var inputs = readline().split(' ');
+const N = parseInt(readline());
+var inputs = readline().split(' ');
 
-// let min = Math.min(...inputs)
-// let max = Math.max(...inputs)
-// let eve = Math.floor((max-min) / inputs.length)
-// inputs=inputs.map(x=>x-eve)
+let min = Math.min(...inputs)
+let max = Math.max(...inputs)
+let eve = Math.floor((max-min) / inputs.length)
+inputs=inputs.map(x=>x-eve)
 
-// let res = []
-// for (let i = 0; i < N; i++) {
+let res = []
+for (let i = 0; i < N; i++) {
     
-//     for (let k = i + 1; k < N; k++) {
-//         let temp = []
-//         let inc = 0
-//         for (let j = k; j < N; j++) {
-//             const l = parseInt(inputs[j]);
-//             if (temp.length === 0) {         
-//                 if (l - inputs[i] > 0) {
-//                     inc = l - inputs[i]
-//                     temp.push(inputs[i], l)
-//                 }
-//                 else break
-//             } else if (l - temp[temp.length - 1] === inc) temp.push(l);
-//         }
-//         // console.error(temp, inc)
-//         if (res.length === 0 || res.length < temp.length) res = temp
-//         else if (res.length === temp.length) {
-//             for (let i = 0; i < temp.length; i++) {
-//                 if (res[i] < temp[i]) break;
-//                 else if (temp[i] < res[i]) {
-//                     res = temp;
-//                     break
-//                 }
-//             }
-//         }
-//     }
-// }
+    for (let k = i + 1; k < N; k++) {
+        let temp = []
+        let inc = 0
+        for (let j = k; j < N; j++) {
+            const l = parseInt(inputs[j]);
+            if (temp.length === 0) {         
+                if (l - inputs[i] > 0) {
+                    inc = l - inputs[i]
+                    temp.push(inputs[i], l)
+                }
+                else break
+            } else if (l - temp[temp.length - 1] === inc) temp.push(l);
+        }
+        // console.error(temp, inc)
+        if (res.length === 0 || res.length < temp.length) res = temp
+        else if (res.length === temp.length) {
+            for (let i = 0; i < temp.length; i++) {
+                if (res[i] < temp[i]) break;
+                else if (temp[i] < res[i]) {
+                    res = temp;
+                    break
+                }
+            }
+        }
+    }
+}
 
-// res=res.map(x=>x+eve)
-// console.log(res.join(' '));
+res=res.map(x=>x+eve)
+console.log(res.join(' '));
 
 
 
