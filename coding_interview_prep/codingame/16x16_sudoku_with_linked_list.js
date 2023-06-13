@@ -1,6 +1,7 @@
 /*
-sudoku: Param: Array of numbers or Charators
-this sudokuSolver is only for 9x9 or 16x16
+Param: sudoku: Array of numbers or Charators
+Param: AllBasicElementArr: Array of numbers or Charators 
+this sudokuSolver is only for 4x4, 9x9 or 16x16
 empty block use .
 */
 function sudokuSolver(sudoku, AllBasicElementArr, emptyStr) {
@@ -240,9 +241,8 @@ function sudokuSolver(sudoku, AllBasicElementArr, emptyStr) {
     }
 }
 
-let puzzleString = "........B.HAL..N..N.....D...OEF...K.A..J..NO.B.P...CL.D..G.E.M.J...JH..P.......E.N.K.....I..JGOD.OM..IECNB.GH...HB...D..P.J.NFCI.HA.ME......KN.CD..ENB.H.POL....NM.B..O.JK..D....PL....D.....A.O.E.HDC.....FPK...C..EAN.OL.P.I..IA.NG.PM..KD..E...O.IH.....NAC.." // next:  1389 , last:  1371
-let basicArr = 'ABCDEFGHIJKLMNOP'.split('')
+// let puzzleString = "........B.HAL..N..N.....D...OEF...K.A..J..NO.B.P...CL.D..G.E.M.J...JH..P.......E.N.K.....I..JGOD.OM..IECNB.GH...HB...D..P.J.NFCI.HA.ME......KN.CD..ENB.H.POL....NM.B..O.JK..D....PL....D.....A.O.E.HDC.....FPK...C..EAN.OL.P.I..IA.NG.PM..KD..E...O.IH.....NAC.." // next:  1389 , last:  1371
+// let puzzleString1 = ".M.OA.F......I...G.PK.MC.NB...EHK.C..H.E.IP.F...N.....OL.AJE.P.B....B...A...L.JO.I.C..L.G..N.E...H.K..I..J.LG.D.......G.EF..I...GC.BI..D..K..H.N..F..C.B....MKL.LKH..N..B..G..C.P..M.KJ..E.C.AI.IAE....F..C..MKJH....DCA...O.LP.M....ON.DB.....C.P....K.I..F...." // next:  5926 , last:  5907
+// let basicArr = 'ABCDEFGHIJKLMNOP'.split('')
 
-let puzzleString1 = ".M.OA.F......I...G.PK.MC.NB...EHK.C..H.E.IP.F...N.....OL.AJE.P.B....B...A...L.JO.I.C..L.G..N.E...H.K..I..J.LG.D.......G.EF..I...GC.BI..D..K..H.N..F..C.B....MKL.LKH..N..B..G..C.P..M.KJ..E.C.AI.IAE....F..C..MKJH....DCA...O.LP.M....ON.DB.....C.P....K.I..F...." // next:  5926 , last:  5907
-
-sudokuSolver(puzzleString, basicArr)
+// sudokuSolver(puzzleString, basicArr)
