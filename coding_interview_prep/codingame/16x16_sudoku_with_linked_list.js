@@ -66,10 +66,16 @@ function sudokuSolver(sudoku, AllBasicElementArr) {
         breaka = false
 
         eliminatePossibility(rows)
-        if(!breaka)eliminatePossibility(cols)
-        if(!breaka)eliminatePossibility(regs)
+        if (!breaka) {
+            eliminatePossibility(cols)
+            eliminatePossibility(regs)
+            findTheUnique(rows)
+            findTheUnique(cols)
+            findTheUnique(regs)
+        }
 
-        if (!breaka && sudoku.every(x => typeof x =='number' || typeof x == 'string')) {
+
+        if (!breaka && sudoku.every(x => typeof x == 'number' || typeof x == 'string')) {
             solved = true
             break
         }
@@ -79,9 +85,10 @@ function sudokuSolver(sudoku, AllBasicElementArr) {
             while (temp.last && temp.currentEle.p.length === 0 && temp.allPosi.length === 0) { // go back to last node
                 temp = { ...temp.last }
                 last++
+                // console.log('last')
             }
             sudoku = [...temp.initSudoku]
-    
+
             if (temp.currentEle.p.length > 0) { // go on give it another try 
                 sudoku[temp.currentEle.i] = temp.currentEle.p.shift()
             } else if (temp.allPosi.length > 0) { // grab a posi obj and update currentElement    
@@ -90,7 +97,7 @@ function sudokuSolver(sudoku, AllBasicElementArr) {
             }
             continue;
         }
-    
+
         if (!updating) {
             let currentAllPosi = []
             sudoku.forEach((x, i) => {
@@ -102,9 +109,9 @@ function sudokuSolver(sudoku, AllBasicElementArr) {
                     currentAllPosi.push(obj)
                 }
             })
-            currentAllPosi = currentAllPosi.sort((b, a) => a.p.length - b.p.length)
+            // currentAllPosi = currentAllPosi.sort((b, a) => a.p.length - b.p.length)
             nextCrrEle = currentAllPosi.shift()
-    
+
             temp.next = {
                 last: temp.initSudoku.length === 0 ? null : { ...temp },
                 initSudoku: [...sudoku],
@@ -115,15 +122,17 @@ function sudokuSolver(sudoku, AllBasicElementArr) {
             temp = { ...temp.next }
             sudoku[temp.currentEle.i] = temp.currentEle.p.shift()
             next++
+            // console.log('next')
+
         }
     }
 
     console.error('next: ', next, ', last: ', last)
+    // console.error(sudoku)
+
     for (let i = 0; i < sudoku.length; i += 16) {
         console.log(sudoku.slice(i, i + 16).join(''))
     }
-
-
 
 
     function eliminatePossibility(indexObj) {
@@ -135,7 +144,10 @@ function sudokuSolver(sudoku, AllBasicElementArr) {
 
             const temp = group.reduce((acc, x) => {
                 if (typeof sudoku[x] == "number" || typeof sudoku[x] == "string") {
-                    if(acc[sudoku[x]]) breaka = true
+                    if (acc[sudoku[x]]) {
+                        breaka = true
+                        console.error('break: ', sudoku[x], " is repeated at index: ", x, ' ')
+                    }
                     acc[sudoku[x]] = 1
                 }
                 else {
@@ -144,7 +156,10 @@ function sudokuSolver(sudoku, AllBasicElementArr) {
                 }
                 return acc
             }, {})
-            
+
+
+            // console.error(pair)
+
             if (breaka) return
 
             if (Object.keys(pair).length > 1) {
@@ -181,7 +196,45 @@ function sudokuSolver(sudoku, AllBasicElementArr) {
                     else updating = true
                 })
                 if (sudoku[index].length === 1) sudoku[index] = sudoku[index][0]
-                if (sudoku[index].length === 0) {breaka = true; return}
+                if (sudoku[index].length === 0) {
+                    breaka = true; 
+                    console.error('break: ', sudoku[index], " is empty at index: ", index, ' ')
+                    return 
+                }
+            }
+
+        }
+
+    }
+
+    function findTheUnique(indexObj) {
+
+        for (let group in indexObj) {
+            const count = {}
+            const exist = {}
+
+            indexObj[group].forEach(i => {
+                if (Array.isArray(sudoku[i])) {
+                    sudoku[i].forEach(y => {
+                        if (count.hasOwnProperty(y)) {
+                            count[y].count++
+                            count[y].index.push(i)
+                        }
+                        else count[y] = {
+                            index: [i],
+                            count: 0
+                        }
+                    })
+
+                } else exist[sudoku[i]] = 1
+            })
+
+            for (let value in count) {
+                if (count[value].count === 0 && exist[value] != 1) {
+                    sudoku[count[value].index[0]] = value
+                    // console.error(count[value].index[0], value)
+                    updating = true
+                }
             }
         }
     }
@@ -192,4 +245,4 @@ let basicArr = 'ABCDEFGHIJKLMNOP'.split('')
 
 let puzzleString1 = ".M.OA.F......I...G.PK.MC.NB...EHK.C..H.E.IP.F...N.....OL.AJE.P.B....B...A...L.JO.I.C..L.G..N.E...H.K..I..J.LG.D.......G.EF..I...GC.BI..D..K..H.N..F..C.B....MKL.LKH..N..B..G..C.P..M.KJ..E.C.AI.IAE....F..C..MKJH....DCA...O.LP.M....ON.DB.....C.P....K.I..F...." // next:  5926 , last:  5907
 
-sudokuSolver(puzzleString1, basicArr)
+sudokuSolver(puzzleString, basicArr)
