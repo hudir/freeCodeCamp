@@ -3,7 +3,7 @@ sudoku: Param: Array of numbers or Charators
 this sudokuSolver is only for 9x9 or 16x16
 empty block use .
 */
-function sudokuSolver(sudoku, AllBasicElementArr) {
+function sudokuSolver(sudoku, AllBasicElementArr, emptyStr) {
     if (!Array.isArray(sudoku)) sudoku = sudoku.split('')
     const sudokuLong = Math.sqrt(sudoku.length)
     const regionLong = Math.sqrt(sudokuLong)
@@ -39,7 +39,7 @@ function sudokuSolver(sudoku, AllBasicElementArr) {
     }
 
     sudoku = sudoku.map((x) => {
-        if (x == ".") {
+        if (x == emptyStr) {
             return AllBasicElementArr;
         } else return x;
     });
@@ -130,8 +130,8 @@ function sudokuSolver(sudoku, AllBasicElementArr) {
     console.error('next: ', next, ', last: ', last)
     // console.error(sudoku)
 
-    for (let i = 0; i < sudoku.length; i += 16) {
-        console.log(sudoku.slice(i, i + 16).join(''))
+    for (let i = 0; i < sudoku.length; i += sudokuLong) {
+        console.log(sudoku.slice(i, i + sudokuLong).join(''))
     }
 
 
