@@ -1,7 +1,7 @@
-/*
-Param: sudoku: Array of numbers or Charators
-Param: AllBasicElementArr: Array of numbers or Charators 
-this sudokuSolver is only for 4x4, 9x9 or 16x16
+/**
+ * @param sudoku {string} Array of numbers or Charators
+ * @param AllBasicElementArr {array} Array of numbers or Charators 
+ * @description sudokuSolver is only for 4x4, 9x9 or 16x16
 empty block use .
 */
 function sudokuSolver(sudoku, AllBasicElementArr, emptyStr) {
