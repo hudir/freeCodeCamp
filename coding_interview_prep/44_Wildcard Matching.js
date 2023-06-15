@@ -1,8 +1,10 @@
 var isMatch = function(s, p) {
     if (p=='*') return true
 
+    
     s = s.split('')
     p = p.split('')
+    if (s.length < p.filter(x=>x==='?').length) return false
     let alt = [], res = []
     check(s, p)
 
@@ -23,34 +25,31 @@ var isMatch = function(s, p) {
                 const newP = np.slice(nextNotStartEleInP)
                 const diffx = newP[0]
                 console.log(diffx, 'diffx')
-             
-                if (newP.length < 1 && !np.slice(i, nextNotStartEleInP).includes('?')) {
+
+                if((alt.length > 0 && diffx === undefined )|| i == np.length-1) {
                     res.push(true)
                     return
-                }
-             
+                }          
 
                 if(alt.every(x=>x != diffx)){ // handle muti sequence
-                    alt.push(diffx)
+                    if(diffx != '?') {
+                        alt.push(diffx)
+                    }
                     const indexObj = {}
                     ns.forEach((x, index)=>{
                         // console.log(x, diffx)
-                        if (x == diffx) {
+                        if ((x == diffx || diffx === '?') && index > i-1) {
                             if(indexObj[x]) indexObj[x] = [...indexObj[x], index]
                             else indexObj[x] = [index]
                         } 
-                    })
-                
-                  
+                    })  
                     
                     for(let k in indexObj) {
                         let arr = indexObj[k]
                         if (arr.length>0) for(let j = 0; j<arr.length; j++) {
                             const newIndex = arr[j]
-    
                             const newS = ns.slice(newIndex+1)
-                          
-                          
+
                             check(newS, newP.slice(1))
     
                         }
@@ -72,8 +71,13 @@ var isMatch = function(s, p) {
     else return false
 };
 
-console.log(isMatch("b", "*?*?"));
 
+
+console.log(isMatch("adceb", "*a*b"));
+
+console.log(isMatch("mississippi", "m??*ss*?i*pi"));
+// console.log(isMatch("hi", "*?"));
+// console.log(isMatch("b", "*?*?"));
 // console.log(isMatch("aa", "a*"));
 // console.log(isMatch("adceb", "*a*b"));
 // console.log(isMatch("acdcb", "a*c?b")); // false
