@@ -12,16 +12,16 @@ var maxDepth = function(root) {
 
 
 var isValidBST = function(root) {
-    if (root == null) return true
     return check(root)
-
-    function check(node, dirction) {
-        if(node == null && dirction == 'l') return -Infinity
-        else if (node == null && dirction == 'r') return Infinity
-
-        return  node.val > check(node.left, 'l') && node.val < check(node.right, 'r')
-
+    
+    function check(node, direction) {
+        if (node === null && direction === 'l') return -Infinity
+        else if (node === null && direction === 'r') return Infinity
+        
+        const t1 = node.val > check(node.left, 'l')
+        const t2 = node.val < check(node.right, 'r')
+        
+        return t1 && t2
     }
-}
-
+};
 

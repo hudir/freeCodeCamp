@@ -9,7 +9,7 @@ var isMatch = function(s, p) {
     check(s, p)
 
     function check(ns, np) {
-        console.log('start',ns.join(''), np.join(''))
+        // console.log('start',ns.join(''), np.join(''))
         maxL = Math.max(ns.length, np.length)
         for (let i = 0; i < maxL; i++) {  
             if(np[i] === '*') {
@@ -24,12 +24,13 @@ var isMatch = function(s, p) {
                 
                 const newP = np.slice(nextNotStartEleInP)
                 const diffx = newP[0]
-                console.log(diffx, 'diffx')
+                // console.log(diffx, 'diffx')
 
-                if((alt.length > 0 && diffx === undefined )|| i == np.length-1) {
-                    res.push(true)
-                    return
-                }          
+                // how to handle the last * ?
+                // if((alt.length > 0 && diffx === undefined )|| i == np.length-1) {
+                //     res.push(true)
+                //     return
+                // }          
 
                 if(alt.every(x=>x != diffx)){ // handle muti sequence
                     if(diffx != '?') {
@@ -63,7 +64,7 @@ var isMatch = function(s, p) {
                 return
             }
         }
-        console.log(ns.join(''), np.join(''))
+        console.log(ns.join(''), np.join(''), 'true')
         res.push(true)
     }
 
@@ -72,10 +73,11 @@ var isMatch = function(s, p) {
 };
 
 
+console.log(isMatch("mississippi", "m*issi*iss*"));
 
-console.log(isMatch("adceb", "*a*b"));
+// console.log(isMatch("adceb", "*a*b"));
 
-console.log(isMatch("mississippi", "m??*ss*?i*pi"));
+// console.log(isMatch("mississippi", "m??*ss*?i*pi"));
 // console.log(isMatch("hi", "*?"));
 // console.log(isMatch("b", "*?*?"));
 // console.log(isMatch("aa", "a*"));
