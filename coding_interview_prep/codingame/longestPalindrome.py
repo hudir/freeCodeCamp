@@ -43,9 +43,9 @@ def sliceStringBasedOnList(arr):
 
             strToCheck = s[arr[x]:arr[y]+1]
             # print(strToCheck)
-            if check(strToCheck) is True:
+            # if check(strToCheck) is True:
                 # print(strToCheck)
-                res.append(strToCheck)
+            res.append(strToCheck)
     return res
             
 
