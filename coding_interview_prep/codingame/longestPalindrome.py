@@ -28,7 +28,7 @@ def getAllIndexes(char, text, currentIndex):
         if i<currentIndex :
             i = currentIndex
             continue
-        if text[i] == char:
+        if text[i] == char and i != currentIndex:
             res.append(i)
     return res
        
